@@ -69,8 +69,8 @@ window.PreventivoTesti = {
     conferme: {
       nome: "Piacere, {nome}.",
       partenza: "Perfetto, è un ottimo punto di partenza.",
+      obiettivo: "Chiaro. È lì che concentreremo il lavoro.",
       scelta: "Ottima scelta.",
-      chiaro: "Chiaro, grazie.",
       tempi: "Perfetto, ne terremo conto."
     },
     sezioni: { profilo: "Profilo", progetto: "Progetto", stile: "Stile", dettagli: "Dettagli", contatti: "Contatti" },
@@ -83,72 +83,67 @@ window.PreventivoTesti = {
     d: {
       nome: { t: "Come posso chiamarti?", h: "Basta il nome.", p: "Il tuo nome" },
       tipo: { t: "Che tipo di attività hai?", o: {
-        negozio: "Negozio o punto vendita", ecommerce: "E-commerce",
-        entrambi: "Sia negozio che online", servizi: "Servizi su appuntamento o contatto" } },
-      settore: { t: "In che settore operi?", o: {
-        moda: "Moda e accessori", food: "Food & beverage", beauty: "Beauty e benessere",
-        casa: "Casa e design", professionisti: "Professionisti e consulenza", altro: "Altro" } },
-      obiettivo: { t: "Cosa deve fare, prima di tutto, il tuo sito?", o: {
-        vendere: "Vendere prodotti o servizi", contatti: "Ricevere richieste di contatto",
-        prenotazioni: "Far prenotare appuntamenti", presentare: "Presentare l'attività in modo chiaro" } },
-      partenza: { t: "Da dove partiamo?", o: {
-        zero_chiare: "Da zero, ho le idee chiare", zero_guida: "Da zero, vorrei essere guidato",
-        rifare: "Ho già un sito da rifare", migliorare: "Ho già un sito da migliorare" } },
-      sito_attuale: { t: "Qual è l'indirizzo del sito attuale?", h: "Facoltativo: ci aiuta a capire da dove partiamo.", p: "www.iltuosito.it" },
-      a_vetrina: { t: "Cosa deve vedere subito il tuo cliente?", o: {
-        prodotti: "Prodotti o servizi", info: "Orari, sede e contatti",
-        promo: "Promozioni e novità", foto: "Foto e video del tuo spazio" } },
-      a_contatto: { t: "Come preferisci che i clienti ti contattino?", o: {
-        telefono: "Telefono", whatsapp: "WhatsApp", form: "Un modulo semplice", prenotazione: "Prenotando un appuntamento" } },
-      a_funzioni: { t: "Ti serve una funzione in più?", o: {
-        catalogo: "Catalogo online", prenotazioni: "Prenotazioni",
-        fedelta: "Programma fedeltà o sconti", nessuna: "No, mi basta un sito chiaro e veloce" } },
+        negozio: "Un negozio o uno spazio fisico", ecommerce: "Vendo online",
+        entrambi: "Entrambi: negozio e online", servizi: "Offro servizi o consulenze" } },
+      settore: { t: "In che settore lavori?", o: {
+        moda: "Moda e accessori", food: "Food, vino e ristorazione", beauty: "Beauty e benessere",
+        casa: "Casa, design e arredo", ospitalita: "Ospitalità e turismo",
+        professionisti: "Professionisti e consulenza", altro: "Altro" } },
+      obiettivo: { t: "Cosa ti aspetti, prima di tutto, dal nuovo sito?", o: {
+        clienti: "Più richieste e nuovi clienti", vendite: "Più vendite online",
+        immagine: "Un'immagine all'altezza del mio lavoro", tempo: "Meno lavoro manuale, più automatismi" } },
+      partenza: { t: "Hai già un sito?", o: {
+        no: "No, sarà il primo", rifare: "Sì, ma va rifatto da capo", migliorare: "Sì, va solo migliorato" } },
+      sito_attuale: { t: "Qual è l'indirizzo del sito attuale?", h: "Facoltativo: lo guardiamo prima di sentirci.", p: "www.iltuosito.it" },
+      a_vetrina: { t: "Cosa deve trovare subito chi arriva sul sito?", o: {
+        prodotti: "I prodotti o i servizi", info: "Orari, indirizzo e come arrivare",
+        promo: "Novità e promozioni", spazio: "Foto e video del tuo spazio" } },
+      a_contatto: { t: "Come ti contattano di solito i clienti?", o: {
+        telefono: "Telefono", whatsapp: "WhatsApp", form: "Un modulo sul sito", social: "Instagram o social" } },
+      a_funzioni: { t: "Vuoi qualcosa in più?", o: {
+        catalogo: "Un catalogo dei prodotti", prenotazioni: "Prenotazioni online",
+        fedelta: "Promozioni o programma fedeltà", nessuna: "No, mi basta un sito chiaro e veloce" } },
       b_vendita: { t: "Cosa vendi online?", o: {
         fisici: "Prodotti fisici", digitali: "Prodotti digitali",
-        servizi: "Servizi acquistabili", abbonamenti: "Abbonamenti o acquisti ricorrenti" } },
-      b_prodotti: { t: "Quanti prodotti hai?", o: {
-        fino20: "Fino a 20", da20a100: "Da 20 a 100", oltre100: "Oltre 100", da_definire: "Ancora da definire" } },
-      b_priorita: { t: "Cosa conta di più per il tuo e-commerce?", o: {
-        pagamenti: "Pagamenti facili e sicuri", spedizioni: "Spedizioni e tracciamento",
-        area: "Area clienti e ordini", gestionale: "Collegamento al gestionale" } },
-      c_priorita: { t: "Qual è la tua priorità principale?", o: {
-        vendere: "Vendere online", negozio: "Portare clienti in negozio",
-        contatti: "Raccogliere contatti", prenotazioni: "Far prenotare servizi" } },
-      c_strumenti: { t: "Devi collegare strumenti che usi già?", o: {
-        gestionale: "Gestionale o magazzino", agenda: "Agenda o prenotazioni",
-        crm: "Gestione contatti ed email", nessuno: "No, per ora non serve" } },
-      c_unione: { t: "Come vuoi unire online e negozio?", o: {
-        catalogo: "Lo stesso catalogo", promo: "Promozioni dedicate",
-        ritiro: "Ritiro in negozio", esperienza: "Un'unica esperienza, online e in negozio" } },
-      d_azione: { t: "Cosa vuoi che faccia chi visita il sito?", o: {
-        preventivo: "Chiedere un preventivo", call: "Prenotare una call",
-        whatsapp: "Scriverti su WhatsApp", form: "Compilare un modulo" } },
-      d_convincere: { t: "Cosa deve convincere chi ti visita?", o: {
-        servizi: "Servizi e benefici", metodo: "Metodo di lavoro",
-        risultati: "Risultati e recensioni", prezzi: "Prezzi o pacchetti" } },
-      d_area: { t: "Ti serve un'area riservata?", o: {
-        no: "No, solo il sito pubblico", clienti: "Sì, un'area clienti",
-        documenti: "Sì, per documenti o preventivi", valutiamo: "Valutiamola insieme" } },
+        servizi: "Servizi o esperienze", abbonamenti: "Abbonamenti" } },
+      b_prodotti: { t: "Quanti prodotti avrai in catalogo?", o: {
+        fino20: "Fino a 20", da20a100: "Da 20 a 100", oltre100: "Più di 100", da_definire: "Non lo so ancora" } },
+      b_priorita: { t: "Su cosa non vuoi compromessi?", o: {
+        pagamenti: "Pagamenti semplici e sicuri", spedizioni: "Spedizioni e resi senza pensieri",
+        estero: "Vendere anche all'estero", gestionale: "Collegamento al gestionale",
+        area: "Area clienti con i propri ordini" } },
+      c_priorita: { t: "Cosa conta di più, oggi?", o: {
+        vendere: "Vendere online", negozio: "Portare più persone in negozio", brand: "Far conoscere il brand" } },
+      c_online: { t: "Cosa deve poter fare il cliente online?", o: {
+        spedizione: "Comprare e ricevere a casa", ritiro: "Ordinare e ritirare in negozio",
+        disponibilita: "Vedere cosa c'è in negozio", appuntamento: "Prenotare un appuntamento" } },
+      c_strumenti: { t: "Usi già dei programmi da collegare al sito?", o: {
+        gestionale: "Gestionale o magazzino", agenda: "Agenda degli appuntamenti",
+        crm: "Newsletter o gestione contatti", nessuno: "No, nessuno" } },
+      d_azione: { t: "Dopo aver visto il sito, cosa vuoi che faccia il visitatore?", o: {
+        preventivo: "Chiederti un preventivo", consulenza: "Prenotare una consulenza", whatsapp: "Scriverti o chiamarti" } },
+      d_convincere: { t: "Cosa convince i clienti a scegliere te?", o: {
+        servizi: "Servizi chiari e i loro benefici", metodo: "Il tuo metodo di lavoro",
+        risultati: "Risultati e recensioni", storia: "La tua storia e il team", prezzi: "Prezzi o pacchetti trasparenti" } },
+      d_area: { t: "Ai tuoi clienti serve un'area riservata?", o: {
+        no: "No, basta il sito", clienti: "Sì, un'area clienti",
+        documenti: "Sì, per documenti e preventivi", valutiamo: "Ne parliamo insieme" } },
       atmosfera: { t: "Che atmosfera vuoi trasmettere?", h: "Scegli quella che ti somiglia di più.", o: {
-        minimal: "Pulita e minimal", premium: "Elegante e premium",
-        dinamica: "Dinamica, con animazioni", risultati: "Essenziale, orientata ai risultati" } },
+        minimal: "Pulita e minimal", premium: "Elegante e raffinata",
+        dinamica: "Viva, con animazioni", concreta: "Essenziale, dritta al punto" } },
+      ispirazione: { t: "C'è un sito che ami e che ti ispira?", h: "Facoltativo: va bene anche di un altro settore.", p: "www.unsitochemipiace.com" },
       identita: { t: "Hai già logo, colori e font?", o: {
-        tutto: "Sì, ho tutto", logo: "Ho solo il logo",
-        colori: "Ho solo colori o indicazioni", no: "No, mi serve un'identità visiva" } },
-      contenuti: { t: "Chi prepara testi e immagini?", o: {
-        pronti: "Li ho già pronti", parte: "Li ho in parte",
-        voi: "Li preparate voi, con le mie indicazioni", insieme: "Li decidiamo insieme" } },
-      investimento: { t: "Che tipo di investimento hai in mente?", o: {
-        essenziale: "Essenziale, solo l'indispensabile", equilibrato: "Equilibrato tra qualità e prezzo",
-        premium: "Premium, design e prestazioni", insieme: "Preferisco definirlo insieme" } },
-      tempi: { t: "Quando vorresti il sito online?", o: {
-        subito: "Il prima possibile", settimane: "Entro 2–4 settimane",
-        mesi: "Entro 1–2 mesi", calma: "Nessuna fretta, prima la qualità" } },
+        tutto: "Sì, ho un'identità completa", logo: "Solo il logo", no: "No, mi serve un'identità visiva" } },
+      contenuti: { t: "Testi e foto: a che punto sei?", o: {
+        pronti: "Ho già tutto pronto", parte: "Ho qualcosa, il resto mi serve", voi: "Preferisco che ve ne occupiate voi" } },
+      tempi: { t: "Quando vorresti essere online?", o: {
+        subito: "Il prima possibile", settimane: "Entro un mese",
+        mesi: "Entro due o tre mesi", calma: "Nessuna fretta, prima la qualità" } },
       canale: { t: "Come preferisci essere ricontattato?", o: {
-        email: "Email", telefono: "Telefono", whatsapp: "WhatsApp", prenoto: "Prenoto subito un appuntamento" } },
-      budget: { t: "Che budget hai previsto per il sito?", h: "Una cifra indicativa: resta tra noi e ci aiuta a proporti la soluzione giusta.", o: {
+        email: "Email", telefono: "Telefono", whatsapp: "WhatsApp", prenoto: "Prenoto subito una call" } },
+      budget: { t: "Che budget hai in mente per il sito?", h: "Una cifra indicativa: resta tra noi e ci aiuta a proporti la soluzione giusta.", o: {
         meno1000: "Meno di 1.000 €", da1000a2500: "Da 1.000 a 2.500 €",
-        da2500a5000: "Da 2.500 a 5.000 €", oltre5000: "Oltre 5.000 €", non_so: "Non lo so ancora" } }
+        da2500a5000: "Da 2.500 a 5.000 €", oltre5000: "Oltre 5.000 €", non_so: "Preferisco parlarne insieme" } }
     }
   },
 
@@ -202,8 +197,8 @@ window.PreventivoTesti = {
     conferme: {
       nome: "Nice to meet you, {nome}.",
       partenza: "Perfect, that's a great starting point.",
+      obiettivo: "Clear. That's exactly where we'll focus.",
       scelta: "Great choice.",
-      chiaro: "Clear, thank you.",
       tempi: "Perfect, we'll keep that in mind."
     },
     sezioni: { profilo: "Profile", progetto: "Project", stile: "Style", dettagli: "Details", contatti: "Contact" },
@@ -216,72 +211,67 @@ window.PreventivoTesti = {
     d: {
       nome: { t: "What should I call you?", h: "Just your first name.", p: "Your name" },
       tipo: { t: "What kind of business do you have?", o: {
-        negozio: "Shop or physical store", ecommerce: "E-commerce",
-        entrambi: "Both a shop and online", servizi: "Services by appointment or enquiry" } },
+        negozio: "A shop or physical space", ecommerce: "I sell online",
+        entrambi: "Both: a shop and online", servizi: "I offer services or consulting" } },
       settore: { t: "Which industry are you in?", o: {
-        moda: "Fashion and accessories", food: "Food & beverage", beauty: "Beauty and wellness",
-        casa: "Home and design", professionisti: "Professional services", altro: "Other" } },
-      obiettivo: { t: "What should your website do, above all?", o: {
-        vendere: "Sell products or services", contatti: "Receive enquiries",
-        prenotazioni: "Take appointment bookings", presentare: "Present the business clearly" } },
-      partenza: { t: "Where are we starting from?", o: {
-        zero_chiare: "From scratch, I know what I want", zero_guida: "From scratch, I'd like guidance",
-        rifare: "I have a website to rebuild", migliorare: "I have a website to improve" } },
-      sito_attuale: { t: "What is your current website address?", h: "Optional: it helps us see where we're starting from.", p: "www.yourwebsite.com" },
-      a_vetrina: { t: "What should your customers see first?", o: {
-        prodotti: "Products or services", info: "Opening hours, location and contacts",
-        promo: "Offers and news", foto: "Photos and videos of your space" } },
-      a_contatto: { t: "How would you like customers to reach you?", o: {
-        telefono: "Phone", whatsapp: "WhatsApp", form: "A simple form", prenotazione: "By booking an appointment" } },
-      a_funzioni: { t: "Do you need an extra feature?", o: {
-        catalogo: "Online catalogue", prenotazioni: "Bookings",
-        fedelta: "Loyalty programme or discounts", nessuna: "No, a clear and fast website is enough" } },
+        moda: "Fashion and accessories", food: "Food, wine and dining", beauty: "Beauty and wellness",
+        casa: "Home, design and interiors", ospitalita: "Hospitality and travel",
+        professionisti: "Professional services", altro: "Other" } },
+      obiettivo: { t: "What do you expect from your new website, above all?", o: {
+        clienti: "More enquiries and new clients", vendite: "More online sales",
+        immagine: "An image that matches the quality of my work", tempo: "Less manual work, more automation" } },
+      partenza: { t: "Do you already have a website?", o: {
+        no: "No, this will be my first", rifare: "Yes, but it needs rebuilding", migliorare: "Yes, it just needs improving" } },
+      sito_attuale: { t: "What is your current website address?", h: "Optional: we'll look at it before we talk.", p: "www.yourwebsite.com" },
+      a_vetrina: { t: "What should visitors find first?", o: {
+        prodotti: "Your products or services", info: "Opening hours, address and directions",
+        promo: "News and offers", spazio: "Photos and videos of your space" } },
+      a_contatto: { t: "How do your customers usually reach you?", o: {
+        telefono: "Phone", whatsapp: "WhatsApp", form: "A form on the website", social: "Instagram or social media" } },
+      a_funzioni: { t: "Would you like something extra?", o: {
+        catalogo: "A product catalogue", prenotazioni: "Online bookings",
+        fedelta: "Offers or a loyalty programme", nessuna: "No, a clear and fast website is enough" } },
       b_vendita: { t: "What do you sell online?", o: {
         fisici: "Physical products", digitali: "Digital products",
-        servizi: "Bookable services", abbonamenti: "Subscriptions or recurring purchases" } },
-      b_prodotti: { t: "How many products do you have?", o: {
-        fino20: "Up to 20", da20a100: "20 to 100", oltre100: "Over 100", da_definire: "Not decided yet" } },
-      b_priorita: { t: "What matters most for your store?", o: {
-        pagamenti: "Easy, secure payments", spedizioni: "Shipping and tracking",
-        area: "Customer accounts and orders", gestionale: "Connection to your management system" } },
-      c_priorita: { t: "What is your main priority?", o: {
-        vendere: "Selling online", negozio: "Bringing customers to the store",
-        contatti: "Collecting leads", prenotazioni: "Taking service bookings" } },
-      c_strumenti: { t: "Do you need to connect tools you already use?", o: {
-        gestionale: "Management or inventory system", agenda: "Calendar or bookings",
-        crm: "Contacts and email management", nessuno: "No, not for now" } },
-      c_unione: { t: "How do you want to connect online and in-store?", o: {
-        catalogo: "The same catalogue", promo: "Dedicated offers",
-        ritiro: "In-store pickup", esperienza: "One seamless experience, online and in-store" } },
-      d_azione: { t: "What do you want visitors to do?", o: {
-        preventivo: "Request a quote", call: "Book a call",
-        whatsapp: "Message you on WhatsApp", form: "Fill in a form" } },
-      d_convincere: { t: "What should win your visitors over?", o: {
-        servizi: "Services and benefits", metodo: "Your way of working",
-        risultati: "Results and reviews", prezzi: "Prices or packages" } },
-      d_area: { t: "Do you need a private area?", o: {
-        no: "No, just the public website", clienti: "Yes, a client area",
-        documenti: "Yes, for documents or quotes", valutiamo: "Let's decide together" } },
+        servizi: "Services or experiences", abbonamenti: "Subscriptions" } },
+      b_prodotti: { t: "How many products will your catalogue have?", o: {
+        fino20: "Up to 20", da20a100: "20 to 100", oltre100: "More than 100", da_definire: "I don't know yet" } },
+      b_priorita: { t: "Where won't you compromise?", o: {
+        pagamenti: "Simple, secure payments", spedizioni: "Effortless shipping and returns",
+        estero: "Selling internationally", gestionale: "Connection to your management system",
+        area: "Customer accounts with order history" } },
+      c_priorita: { t: "What matters most right now?", o: {
+        vendere: "Selling online", negozio: "Bringing more people to the store", brand: "Building brand awareness" } },
+      c_online: { t: "What should customers be able to do online?", o: {
+        spedizione: "Buy and get it delivered", ritiro: "Order and pick up in store",
+        disponibilita: "See what's available in store", appuntamento: "Book an appointment" } },
+      c_strumenti: { t: "Do you already use software we should connect?", o: {
+        gestionale: "Management or inventory system", agenda: "Appointment calendar",
+        crm: "Newsletter or contact management", nessuno: "No, none" } },
+      d_azione: { t: "After seeing your website, what should visitors do?", o: {
+        preventivo: "Ask you for a quote", consulenza: "Book a consultation", whatsapp: "Message or call you" } },
+      d_convincere: { t: "What makes clients choose you?", o: {
+        servizi: "Clear services and their benefits", metodo: "Your way of working",
+        risultati: "Results and reviews", storia: "Your story and team", prezzi: "Transparent prices or packages" } },
+      d_area: { t: "Do your clients need a private area?", o: {
+        no: "No, the website is enough", clienti: "Yes, a client area",
+        documenti: "Yes, for documents and quotes", valutiamo: "Let's discuss it together" } },
       atmosfera: { t: "What atmosphere do you want to convey?", h: "Choose the one that feels most like you.", o: {
-        minimal: "Clean and minimal", premium: "Elegant and premium",
-        dinamica: "Dynamic, with animations", risultati: "Essential, results-driven" } },
+        minimal: "Clean and minimal", premium: "Elegant and refined",
+        dinamica: "Lively, with animations", concreta: "Essential, straight to the point" } },
+      ispirazione: { t: "Is there a website you love that inspires you?", h: "Optional: it can be from any industry.", p: "www.awebsiteilove.com" },
       identita: { t: "Do you already have a logo, colours and fonts?", o: {
-        tutto: "Yes, I have everything", logo: "Only the logo",
-        colori: "Only colours or guidelines", no: "No, I need a visual identity" } },
-      contenuti: { t: "Who will prepare the texts and images?", o: {
-        pronti: "I already have them", parte: "I have some of them",
-        voi: "You do, with my input", insieme: "We decide together" } },
-      investimento: { t: "What kind of investment do you have in mind?", o: {
-        essenziale: "Essential, just what's needed", equilibrato: "Balanced quality and price",
-        premium: "Premium, design and performance", insieme: "I'd rather define it together" } },
-      tempi: { t: "When would you like the website online?", o: {
-        subito: "As soon as possible", settimane: "Within 2–4 weeks",
-        mesi: "Within 1–2 months", calma: "No rush, quality first" } },
+        tutto: "Yes, a complete identity", logo: "Only the logo", no: "No, I need a visual identity" } },
+      contenuti: { t: "Texts and photos: where are you at?", o: {
+        pronti: "Everything is ready", parte: "I have some, I need the rest", voi: "I'd rather you took care of it" } },
+      tempi: { t: "When would you like to go live?", o: {
+        subito: "As soon as possible", settimane: "Within a month",
+        mesi: "Within two or three months", calma: "No rush, quality first" } },
       canale: { t: "How would you like us to get back to you?", o: {
         email: "Email", telefono: "Phone", whatsapp: "WhatsApp", prenoto: "I'll book a call right away" } },
-      budget: { t: "What budget have you set for the website?", h: "A rough figure: it stays between us and helps us suggest the right solution.", o: {
+      budget: { t: "What budget do you have in mind?", h: "A rough figure: it stays between us and helps us suggest the right solution.", o: {
         meno1000: "Under $1,000", da1000a2500: "$1,000 to $2,500",
-        da2500a5000: "$2,500 to $5,000", oltre5000: "Over $5,000", non_so: "I don't know yet" } }
+        da2500a5000: "$2,500 to $5,000", oltre5000: "Over $5,000", non_so: "I'd rather discuss it together" } }
     }
   },
 
@@ -335,8 +325,8 @@ window.PreventivoTesti = {
     conferme: {
       nome: "Enchanté, {nome}.",
       partenza: "Parfait, c'est un excellent point de départ.",
+      obiettivo: "C'est clair. C'est là que nous concentrerons le travail.",
       scelta: "Excellent choix.",
-      chiaro: "C'est clair, merci.",
       tempi: "Parfait, nous en tiendrons compte."
     },
     sezioni: { profilo: "Profil", progetto: "Projet", stile: "Style", dettagli: "Détails", contatti: "Contact" },
@@ -349,72 +339,67 @@ window.PreventivoTesti = {
     d: {
       nome: { t: "Comment puis-je t'appeler ?", h: "Ton prénom suffit.", p: "Ton prénom" },
       tipo: { t: "Quel type d'activité as-tu ?", o: {
-        negozio: "Boutique ou point de vente", ecommerce: "E-commerce",
-        entrambi: "Boutique et en ligne", servizi: "Services sur rendez-vous ou sur demande" } },
+        negozio: "Une boutique ou un lieu physique", ecommerce: "Je vends en ligne",
+        entrambi: "Les deux : boutique et en ligne", servizi: "Je propose des services ou du conseil" } },
       settore: { t: "Dans quel secteur travailles-tu ?", o: {
-        moda: "Mode et accessoires", food: "Food & beverage", beauty: "Beauté et bien-être",
-        casa: "Maison et design", professionisti: "Professions libérales et conseil", altro: "Autre" } },
-      obiettivo: { t: "Que doit faire ton site, avant tout ?", o: {
-        vendere: "Vendre des produits ou services", contatti: "Recevoir des demandes de contact",
-        prenotazioni: "Faire réserver des rendez-vous", presentare: "Présenter clairement l'activité" } },
-      partenza: { t: "D'où partons-nous ?", o: {
-        zero_chiare: "De zéro, mes idées sont claires", zero_guida: "De zéro, j'aimerais être guidé",
-        rifare: "J'ai un site à refaire", migliorare: "J'ai un site à améliorer" } },
-      sito_attuale: { t: "Quelle est l'adresse de ton site actuel ?", h: "Facultatif : cela nous aide à comprendre d'où nous partons.", p: "www.tonsite.fr" },
-      a_vetrina: { t: "Que doit voir ton client en premier ?", o: {
-        prodotti: "Produits ou services", info: "Horaires, adresse et contacts",
-        promo: "Promotions et nouveautés", foto: "Photos et vidéos de ton espace" } },
-      a_contatto: { t: "Comment préfères-tu que tes clients te contactent ?", o: {
-        telefono: "Téléphone", whatsapp: "WhatsApp", form: "Un formulaire simple", prenotazione: "En réservant un rendez-vous" } },
-      a_funzioni: { t: "As-tu besoin d'une fonction en plus ?", o: {
-        catalogo: "Catalogue en ligne", prenotazioni: "Réservations",
-        fedelta: "Programme de fidélité ou réductions", nessuna: "Non, un site clair et rapide me suffit" } },
+        moda: "Mode et accessoires", food: "Gastronomie, vin et restauration", beauty: "Beauté et bien-être",
+        casa: "Maison, design et décoration", ospitalita: "Hôtellerie et tourisme",
+        professionisti: "Professions libérales et conseil", altro: "Autre" } },
+      obiettivo: { t: "Qu'attends-tu avant tout de ton nouveau site ?", o: {
+        clienti: "Plus de demandes et de nouveaux clients", vendite: "Plus de ventes en ligne",
+        immagine: "Une image à la hauteur de mon travail", tempo: "Moins de tâches manuelles, plus d'automatisation" } },
+      partenza: { t: "As-tu déjà un site ?", o: {
+        no: "Non, ce sera le premier", rifare: "Oui, mais il faut le refaire", migliorare: "Oui, il faut juste l'améliorer" } },
+      sito_attuale: { t: "Quelle est l'adresse de ton site actuel ?", h: "Facultatif : nous le regarderons avant d'en parler.", p: "www.tonsite.fr" },
+      a_vetrina: { t: "Que doit trouver en premier le visiteur ?", o: {
+        prodotti: "Tes produits ou services", info: "Horaires, adresse et accès",
+        promo: "Nouveautés et promotions", spazio: "Photos et vidéos de ton espace" } },
+      a_contatto: { t: "Comment tes clients te contactent-ils d'habitude ?", o: {
+        telefono: "Téléphone", whatsapp: "WhatsApp", form: "Un formulaire sur le site", social: "Instagram ou réseaux sociaux" } },
+      a_funzioni: { t: "Tu veux quelque chose en plus ?", o: {
+        catalogo: "Un catalogue des produits", prenotazioni: "Réservations en ligne",
+        fedelta: "Promotions ou programme de fidélité", nessuna: "Non, un site clair et rapide me suffit" } },
       b_vendita: { t: "Que vends-tu en ligne ?", o: {
         fisici: "Produits physiques", digitali: "Produits numériques",
-        servizi: "Services à acheter", abbonamenti: "Abonnements ou achats récurrents" } },
-      b_prodotti: { t: "Combien de produits as-tu ?", o: {
-        fino20: "Jusqu'à 20", da20a100: "De 20 à 100", oltre100: "Plus de 100", da_definire: "Encore à définir" } },
-      b_priorita: { t: "Qu'est-ce qui compte le plus pour ta boutique ?", o: {
-        pagamenti: "Paiements simples et sécurisés", spedizioni: "Livraisons et suivi",
-        area: "Espace client et commandes", gestionale: "Connexion au logiciel de gestion" } },
-      c_priorita: { t: "Quelle est ta priorité principale ?", o: {
-        vendere: "Vendre en ligne", negozio: "Attirer des clients en boutique",
-        contatti: "Collecter des contacts", prenotazioni: "Faire réserver des services" } },
-      c_strumenti: { t: "Dois-tu connecter des outils que tu utilises déjà ?", o: {
-        gestionale: "Logiciel de gestion ou stock", agenda: "Agenda ou réservations",
-        crm: "Gestion des contacts et e-mails", nessuno: "Non, pas pour l'instant" } },
-      c_unione: { t: "Comment veux-tu relier en ligne et boutique ?", o: {
-        catalogo: "Le même catalogue", promo: "Des promotions dédiées",
-        ritiro: "Retrait en boutique", esperienza: "Une seule expérience, en ligne et en boutique" } },
-      d_azione: { t: "Que veux-tu que fasse le visiteur ?", o: {
-        preventivo: "Demander un devis", call: "Réserver un appel",
-        whatsapp: "T'écrire sur WhatsApp", form: "Remplir un formulaire" } },
-      d_convincere: { t: "Qu'est-ce qui doit convaincre le visiteur ?", o: {
-        servizi: "Services et avantages", metodo: "Méthode de travail",
-        risultati: "Résultats et avis", prezzi: "Prix ou formules" } },
-      d_area: { t: "As-tu besoin d'un espace réservé ?", o: {
-        no: "Non, seulement le site public", clienti: "Oui, un espace client",
-        documenti: "Oui, pour documents ou devis", valutiamo: "Décidons-le ensemble" } },
+        servizi: "Services ou expériences", abbonamenti: "Abonnements" } },
+      b_prodotti: { t: "Combien de produits aura ton catalogue ?", o: {
+        fino20: "Jusqu'à 20", da20a100: "De 20 à 100", oltre100: "Plus de 100", da_definire: "Je ne sais pas encore" } },
+      b_priorita: { t: "Sur quoi refuses-tu les compromis ?", o: {
+        pagamenti: "Paiements simples et sécurisés", spedizioni: "Livraisons et retours sans souci",
+        estero: "Vendre aussi à l'étranger", gestionale: "Connexion au logiciel de gestion",
+        area: "Espace client avec ses commandes" } },
+      c_priorita: { t: "Qu'est-ce qui compte le plus aujourd'hui ?", o: {
+        vendere: "Vendre en ligne", negozio: "Attirer plus de monde en boutique", brand: "Faire connaître la marque" } },
+      c_online: { t: "Que doit pouvoir faire le client en ligne ?", o: {
+        spedizione: "Acheter et se faire livrer", ritiro: "Commander et retirer en boutique",
+        disponibilita: "Voir ce qui est disponible en boutique", appuntamento: "Prendre rendez-vous" } },
+      c_strumenti: { t: "Utilises-tu déjà des logiciels à connecter au site ?", o: {
+        gestionale: "Gestion ou stock", agenda: "Agenda des rendez-vous",
+        crm: "Newsletter ou gestion des contacts", nessuno: "Non, aucun" } },
+      d_azione: { t: "Après avoir vu le site, que doit faire le visiteur ?", o: {
+        preventivo: "Te demander un devis", consulenza: "Réserver une consultation", whatsapp: "T'écrire ou t'appeler" } },
+      d_convincere: { t: "Qu'est-ce qui pousse tes clients à te choisir ?", o: {
+        servizi: "Des services clairs et leurs avantages", metodo: "Ta méthode de travail",
+        risultati: "Résultats et avis", storia: "Ton histoire et ton équipe", prezzi: "Des prix ou formules transparents" } },
+      d_area: { t: "Tes clients ont-ils besoin d'un espace réservé ?", o: {
+        no: "Non, le site suffit", clienti: "Oui, un espace client",
+        documenti: "Oui, pour documents et devis", valutiamo: "Parlons-en ensemble" } },
       atmosfera: { t: "Quelle atmosphère veux-tu transmettre ?", h: "Choisis celle qui te ressemble le plus.", o: {
-        minimal: "Épurée et minimaliste", premium: "Élégante et premium",
-        dinamica: "Dynamique, avec animations", risultati: "Essentielle, axée sur les résultats" } },
+        minimal: "Épurée et minimaliste", premium: "Élégante et raffinée",
+        dinamica: "Vivante, avec animations", concreta: "Essentielle, droit au but" } },
+      ispirazione: { t: "Y a-t-il un site que tu adores et qui t'inspire ?", h: "Facultatif : il peut être d'un autre secteur.", p: "www.unsitequejaime.com" },
       identita: { t: "As-tu déjà un logo, des couleurs et des polices ?", o: {
-        tutto: "Oui, j'ai tout", logo: "Seulement le logo",
-        colori: "Seulement des couleurs ou des indications", no: "Non, il me faut une identité visuelle" } },
-      contenuti: { t: "Qui prépare les textes et les images ?", o: {
-        pronti: "Je les ai déjà", parte: "Je les ai en partie",
-        voi: "Vous, avec mes indications", insieme: "On en décide ensemble" } },
-      investimento: { t: "Quel type d'investissement envisages-tu ?", o: {
-        essenziale: "Essentiel, juste l'indispensable", equilibrato: "Équilibre qualité-prix",
-        premium: "Premium, design et performances", insieme: "Je préfère le définir ensemble" } },
-      tempi: { t: "Quand voudrais-tu que le site soit en ligne ?", o: {
-        subito: "Le plus tôt possible", settimane: "D'ici 2 à 4 semaines",
-        mesi: "D'ici 1 à 2 mois", calma: "Pas d'urgence, la qualité d'abord" } },
+        tutto: "Oui, une identité complète", logo: "Seulement le logo", no: "Non, il me faut une identité visuelle" } },
+      contenuti: { t: "Textes et photos : où en es-tu ?", o: {
+        pronti: "Tout est prêt", parte: "J'ai une partie, il me manque le reste", voi: "Je préfère que vous vous en occupiez" } },
+      tempi: { t: "Quand voudrais-tu être en ligne ?", o: {
+        subito: "Le plus tôt possible", settimane: "D'ici un mois",
+        mesi: "D'ici deux ou trois mois", calma: "Pas d'urgence, la qualité d'abord" } },
       canale: { t: "Comment préfères-tu être recontacté ?", o: {
-        email: "E-mail", telefono: "Téléphone", whatsapp: "WhatsApp", prenoto: "Je réserve un rendez-vous tout de suite" } },
-      budget: { t: "Quel budget as-tu prévu pour le site ?", h: "Un montant indicatif : il reste entre nous et nous aide à te proposer la bonne solution.", o: {
+        email: "E-mail", telefono: "Téléphone", whatsapp: "WhatsApp", prenoto: "Je réserve un appel tout de suite" } },
+      budget: { t: "Quel budget envisages-tu pour le site ?", h: "Un montant indicatif : il reste entre nous et nous aide à te proposer la bonne solution.", o: {
         meno1000: "Moins de 1 000 €", da1000a2500: "De 1 000 à 2 500 €",
-        da2500a5000: "De 2 500 à 5 000 €", oltre5000: "Plus de 5 000 €", non_so: "Je ne sais pas encore" } }
+        da2500a5000: "De 2 500 à 5 000 €", oltre5000: "Plus de 5 000 €", non_so: "Je préfère en parler ensemble" } }
     }
   },
 
@@ -468,8 +453,8 @@ window.PreventivoTesti = {
     conferme: {
       nome: "Freut mich, {nome}.",
       partenza: "Perfekt, das ist ein sehr guter Ausgangspunkt.",
+      obiettivo: "Verstanden. Genau darauf konzentrieren wir uns.",
       scelta: "Gute Wahl.",
-      chiaro: "Alles klar, danke.",
       tempi: "Perfekt, das berücksichtigen wir."
     },
     sezioni: { profilo: "Profil", progetto: "Projekt", stile: "Stil", dettagli: "Details", contatti: "Kontakt" },
@@ -482,72 +467,67 @@ window.PreventivoTesti = {
     d: {
       nome: { t: "Wie darf ich dich nennen?", h: "Der Vorname reicht.", p: "Dein Name" },
       tipo: { t: "Was für ein Unternehmen hast du?", o: {
-        negozio: "Laden oder Geschäft", ecommerce: "E-Commerce",
-        entrambi: "Laden und online", servizi: "Dienstleistungen nach Termin oder Anfrage" } },
-      settore: { t: "In welcher Branche bist du tätig?", o: {
-        moda: "Mode und Accessoires", food: "Food & Beverage", beauty: "Beauty und Wellness",
-        casa: "Wohnen und Design", professionisti: "Freiberufler und Beratung", altro: "Andere" } },
-      obiettivo: { t: "Was soll deine Website vor allem leisten?", o: {
-        vendere: "Produkte oder Leistungen verkaufen", contatti: "Kontaktanfragen erhalten",
-        prenotazioni: "Termine buchen lassen", presentare: "Das Unternehmen klar vorstellen" } },
-      partenza: { t: "Wo fangen wir an?", o: {
-        zero_chiare: "Bei null, ich weiß, was ich will", zero_guida: "Bei null, ich hätte gern Beratung",
-        rifare: "Ich habe eine Website, die neu muss", migliorare: "Ich habe eine Website, die besser werden soll" } },
-      sito_attuale: { t: "Wie lautet die Adresse deiner aktuellen Website?", h: "Optional: So sehen wir, wo wir anfangen.", p: "www.deinewebsite.de" },
-      a_vetrina: { t: "Was sollen deine Kunden als Erstes sehen?", o: {
-        prodotti: "Produkte oder Leistungen", info: "Öffnungszeiten, Adresse und Kontakt",
-        promo: "Angebote und Neuheiten", foto: "Fotos und Videos deiner Räume" } },
-      a_contatto: { t: "Wie sollen Kunden dich am liebsten erreichen?", o: {
-        telefono: "Telefon", whatsapp: "WhatsApp", form: "Ein einfaches Formular", prenotazione: "Über eine Terminbuchung" } },
-      a_funzioni: { t: "Brauchst du eine zusätzliche Funktion?", o: {
-        catalogo: "Online-Katalog", prenotazioni: "Buchungen",
-        fedelta: "Treueprogramm oder Rabatte", nessuna: "Nein, eine klare, schnelle Website reicht mir" } },
+        negozio: "Ein Geschäft oder ein Ladenlokal", ecommerce: "Ich verkaufe online",
+        entrambi: "Beides: Laden und online", servizi: "Ich biete Dienstleistungen oder Beratung" } },
+      settore: { t: "In welcher Branche arbeitest du?", o: {
+        moda: "Mode und Accessoires", food: "Essen, Wein und Gastronomie", beauty: "Beauty und Wellness",
+        casa: "Wohnen, Design und Einrichtung", ospitalita: "Hotellerie und Tourismus",
+        professionisti: "Freiberufler und Beratung", altro: "Andere" } },
+      obiettivo: { t: "Was erwartest du vor allem von deiner neuen Website?", o: {
+        clienti: "Mehr Anfragen und neue Kunden", vendite: "Mehr Umsatz online",
+        immagine: "Einen Auftritt, der meiner Arbeit gerecht wird", tempo: "Weniger Handarbeit, mehr Automatik" } },
+      partenza: { t: "Hast du schon eine Website?", o: {
+        no: "Nein, es wird die erste", rifare: "Ja, aber sie muss neu gemacht werden", migliorare: "Ja, sie soll nur besser werden" } },
+      sito_attuale: { t: "Wie lautet die Adresse deiner aktuellen Website?", h: "Optional: Wir schauen sie uns vor dem Gespräch an.", p: "www.deinewebsite.de" },
+      a_vetrina: { t: "Was sollen Besucher als Erstes finden?", o: {
+        prodotti: "Deine Produkte oder Leistungen", info: "Öffnungszeiten, Adresse und Anfahrt",
+        promo: "Neuheiten und Angebote", spazio: "Fotos und Videos deiner Räume" } },
+      a_contatto: { t: "Wie erreichen dich deine Kunden meistens?", o: {
+        telefono: "Telefon", whatsapp: "WhatsApp", form: "Ein Formular auf der Website", social: "Instagram oder Social Media" } },
+      a_funzioni: { t: "Möchtest du etwas zusätzlich?", o: {
+        catalogo: "Einen Produktkatalog", prenotazioni: "Online-Buchungen",
+        fedelta: "Angebote oder ein Treueprogramm", nessuna: "Nein, eine klare, schnelle Website reicht" } },
       b_vendita: { t: "Was verkaufst du online?", o: {
         fisici: "Physische Produkte", digitali: "Digitale Produkte",
-        servizi: "Buchbare Leistungen", abbonamenti: "Abos oder wiederkehrende Käufe" } },
-      b_prodotti: { t: "Wie viele Produkte hast du?", o: {
-        fino20: "Bis zu 20", da20a100: "20 bis 100", oltre100: "Über 100", da_definire: "Noch offen" } },
-      b_priorita: { t: "Was ist für deinen Shop am wichtigsten?", o: {
-        pagamenti: "Einfache, sichere Zahlungen", spedizioni: "Versand und Sendungsverfolgung",
-        area: "Kundenkonto und Bestellungen", gestionale: "Anbindung an dein Warenwirtschaftssystem" } },
-      c_priorita: { t: "Was ist deine wichtigste Priorität?", o: {
-        vendere: "Online verkaufen", negozio: "Kunden in den Laden bringen",
-        contatti: "Kontakte sammeln", prenotazioni: "Leistungen buchen lassen" } },
-      c_strumenti: { t: "Musst du Tools anbinden, die du schon nutzt?", o: {
-        gestionale: "Warenwirtschaft oder Lager", agenda: "Kalender oder Buchungen",
-        crm: "Kontakt- und E-Mail-Verwaltung", nessuno: "Nein, im Moment nicht" } },
-      c_unione: { t: "Wie willst du Online und Laden verbinden?", o: {
-        catalogo: "Derselbe Katalog", promo: "Eigene Angebote",
-        ritiro: "Abholung im Laden", esperienza: "Ein einheitliches Erlebnis, online und im Laden" } },
-      d_azione: { t: "Was sollen Besucher auf deiner Website tun?", o: {
-        preventivo: "Ein Angebot anfragen", call: "Ein Gespräch buchen",
-        whatsapp: "Dir auf WhatsApp schreiben", form: "Ein Formular ausfüllen" } },
-      d_convincere: { t: "Was soll deine Besucher überzeugen?", o: {
-        servizi: "Leistungen und Vorteile", metodo: "Deine Arbeitsweise",
-        risultati: "Ergebnisse und Bewertungen", prezzi: "Preise oder Pakete" } },
-      d_area: { t: "Brauchst du einen geschützten Bereich?", o: {
-        no: "Nein, nur die öffentliche Website", clienti: "Ja, einen Kundenbereich",
-        documenti: "Ja, für Dokumente oder Angebote", valutiamo: "Lass uns das gemeinsam klären" } },
+        servizi: "Leistungen oder Erlebnisse", abbonamenti: "Abonnements" } },
+      b_prodotti: { t: "Wie viele Produkte wird dein Katalog haben?", o: {
+        fino20: "Bis zu 20", da20a100: "20 bis 100", oltre100: "Mehr als 100", da_definire: "Weiß ich noch nicht" } },
+      b_priorita: { t: "Wo willst du keine Kompromisse?", o: {
+        pagamenti: "Einfache, sichere Zahlungen", spedizioni: "Sorgloser Versand und Rückgabe",
+        estero: "Auch ins Ausland verkaufen", gestionale: "Anbindung an dein Warenwirtschaftssystem",
+        area: "Kundenkonto mit Bestellungen" } },
+      c_priorita: { t: "Was zählt heute am meisten?", o: {
+        vendere: "Online verkaufen", negozio: "Mehr Menschen in den Laden bringen", brand: "Die Marke bekannt machen" } },
+      c_online: { t: "Was sollen Kunden online tun können?", o: {
+        spedizione: "Kaufen und liefern lassen", ritiro: "Bestellen und im Laden abholen",
+        disponibilita: "Sehen, was im Laden verfügbar ist", appuntamento: "Einen Termin buchen" } },
+      c_strumenti: { t: "Nutzt du schon Programme, die wir anbinden sollten?", o: {
+        gestionale: "Warenwirtschaft oder Lager", agenda: "Terminkalender",
+        crm: "Newsletter oder Kontaktverwaltung", nessuno: "Nein, keine" } },
+      d_azione: { t: "Was sollen Besucher nach dem Besuch deiner Website tun?", o: {
+        preventivo: "Ein Angebot anfragen", consulenza: "Eine Beratung buchen", whatsapp: "Dir schreiben oder dich anrufen" } },
+      d_convincere: { t: "Was überzeugt Kunden, dich zu wählen?", o: {
+        servizi: "Klare Leistungen und ihr Nutzen", metodo: "Deine Arbeitsweise",
+        risultati: "Ergebnisse und Bewertungen", storia: "Deine Geschichte und dein Team", prezzi: "Transparente Preise oder Pakete" } },
+      d_area: { t: "Brauchen deine Kunden einen geschützten Bereich?", o: {
+        no: "Nein, die Website reicht", clienti: "Ja, einen Kundenbereich",
+        documenti: "Ja, für Dokumente und Angebote", valutiamo: "Lass uns darüber sprechen" } },
       atmosfera: { t: "Welche Stimmung soll deine Website vermitteln?", h: "Wähle die, die am besten zu dir passt.", o: {
-        minimal: "Klar und minimalistisch", premium: "Elegant und hochwertig",
-        dinamica: "Dynamisch, mit Animationen", risultati: "Schlicht und ergebnisorientiert" } },
+        minimal: "Klar und minimalistisch", premium: "Elegant und raffiniert",
+        dinamica: "Lebendig, mit Animationen", concreta: "Schlicht und auf den Punkt" } },
+      ispirazione: { t: "Gibt es eine Website, die du liebst und die dich inspiriert?", h: "Optional: gern auch aus einer anderen Branche.", p: "www.einewebsitedieichmag.de" },
       identita: { t: "Hast du schon Logo, Farben und Schriften?", o: {
-        tutto: "Ja, ich habe alles", logo: "Nur das Logo",
-        colori: "Nur Farben oder Vorgaben", no: "Nein, ich brauche ein visuelles Erscheinungsbild" } },
-      contenuti: { t: "Wer bereitet Texte und Bilder vor?", o: {
-        pronti: "Ich habe sie schon", parte: "Ich habe einen Teil",
-        voi: "Ihr, nach meinen Vorgaben", insieme: "Wir entscheiden gemeinsam" } },
-      investimento: { t: "An welche Art von Investition denkst du?", o: {
-        essenziale: "Essenziell, nur das Nötigste", equilibrato: "Ausgewogen zwischen Qualität und Preis",
-        premium: "Premium, Design und Leistung", insieme: "Lieber gemeinsam festlegen" } },
-      tempi: { t: "Wann soll die Website online gehen?", o: {
-        subito: "So bald wie möglich", settimane: "In 2–4 Wochen",
-        mesi: "In 1–2 Monaten", calma: "Keine Eile, Qualität zuerst" } },
+        tutto: "Ja, ein vollständiges Erscheinungsbild", logo: "Nur das Logo", no: "Nein, ich brauche ein visuelles Erscheinungsbild" } },
+      contenuti: { t: "Texte und Fotos: Wie weit bist du?", o: {
+        pronti: "Alles ist fertig", parte: "Einiges habe ich, der Rest fehlt", voi: "Ich möchte, dass ihr euch darum kümmert" } },
+      tempi: { t: "Wann möchtest du online gehen?", o: {
+        subito: "So bald wie möglich", settimane: "Innerhalb eines Monats",
+        mesi: "In zwei bis drei Monaten", calma: "Keine Eile, Qualität zuerst" } },
       canale: { t: "Wie sollen wir uns bei dir melden?", o: {
-        email: "E-Mail", telefono: "Telefon", whatsapp: "WhatsApp", prenoto: "Ich buche gleich einen Termin" } },
-      budget: { t: "Welches Budget hast du für die Website eingeplant?", h: "Ein grober Betrag: Er bleibt unter uns und hilft uns, die richtige Lösung vorzuschlagen.", o: {
+        email: "E-Mail", telefono: "Telefon", whatsapp: "WhatsApp", prenoto: "Ich buche gleich ein Gespräch" } },
+      budget: { t: "Welches Budget schwebt dir für die Website vor?", h: "Ein grober Betrag: Er bleibt unter uns und hilft uns, die richtige Lösung vorzuschlagen.", o: {
         meno1000: "Unter 1.000 €", da1000a2500: "1.000 bis 2.500 €",
-        da2500a5000: "2.500 bis 5.000 €", oltre5000: "Über 5.000 €", non_so: "Weiß ich noch nicht" } }
+        da2500a5000: "2.500 bis 5.000 €", oltre5000: "Über 5.000 €", non_so: "Lieber gemeinsam besprechen" } }
     }
   },
 
@@ -601,8 +581,8 @@ window.PreventivoTesti = {
     conferme: {
       nome: "تشرّفنا، {nome}.",
       partenza: "ممتاز، إنها نقطة انطلاق رائعة.",
+      obiettivo: "واضح. هنا بالضبط سنركّز عملنا.",
       scelta: "اختيار موفّق.",
-      chiaro: "واضح، شكرًا لك.",
       tempi: "ممتاز، سنأخذ ذلك بعين الاعتبار."
     },
     sezioni: { profilo: "الملف", progetto: "المشروع", stile: "الأسلوب", dettagli: "التفاصيل", contatti: "التواصل" },
@@ -615,72 +595,67 @@ window.PreventivoTesti = {
     d: {
       nome: { t: "بماذا أناديك؟", h: "يكفي الاسم الأول.", p: "اسمك" },
       tipo: { t: "ما نوع نشاطك؟", o: {
-        negozio: "متجر أو نقطة بيع", ecommerce: "متجر إلكتروني",
-        entrambi: "متجر وبيع عبر الإنترنت معًا", servizi: "خدمات بالحجز أو عند الطلب" } },
+        negozio: "متجر أو مكان فعلي", ecommerce: "أبيع عبر الإنترنت",
+        entrambi: "الاثنان معًا: متجر وإنترنت", servizi: "أقدّم خدمات أو استشارات" } },
       settore: { t: "في أي مجال تعمل؟", o: {
-        moda: "الأزياء والإكسسوارات", food: "الأطعمة والمشروبات", beauty: "التجميل والعناية",
-        casa: "المنزل والتصميم", professionisti: "المهن الحرة والاستشارات", altro: "مجال آخر" } },
-      obiettivo: { t: "ما الذي يجب أن يفعله موقعك قبل كل شيء؟", o: {
-        vendere: "بيع منتجات أو خدمات", contatti: "استقبال طلبات التواصل",
-        prenotazioni: "حجز المواعيد", presentare: "تقديم نشاطك بوضوح" } },
-      partenza: { t: "من أين نبدأ؟", o: {
-        zero_chiare: "من الصفر، وأفكاري واضحة", zero_guida: "من الصفر، وأحتاج إلى توجيه",
-        rifare: "لديّ موقع أريد إعادة بنائه", migliorare: "لديّ موقع أريد تحسينه" } },
-      sito_attuale: { t: "ما عنوان موقعك الحالي؟", h: "اختياري: يساعدنا على فهم نقطة البداية.", p: "www.example.com" },
-      a_vetrina: { t: "ما الذي يجب أن يراه عميلك أولًا؟", o: {
-        prodotti: "المنتجات أو الخدمات", info: "المواعيد والعنوان ووسائل التواصل",
-        promo: "العروض والجديد", foto: "صور وفيديوهات لمكانك" } },
-      a_contatto: { t: "كيف تفضّل أن يتواصل معك العملاء؟", o: {
-        telefono: "الهاتف", whatsapp: "واتساب", form: "نموذج بسيط", prenotazione: "بحجز موعد" } },
-      a_funzioni: { t: "هل تحتاج إلى ميزة إضافية؟", o: {
-        catalogo: "كتالوج إلكتروني", prenotazioni: "الحجوزات",
-        fedelta: "برنامج ولاء أو خصومات", nessuna: "لا، يكفيني موقع واضح وسريع" } },
+        moda: "الأزياء والإكسسوارات", food: "الطعام والمطاعم", beauty: "التجميل والعناية",
+        casa: "المنزل والتصميم والأثاث", ospitalita: "الضيافة والسياحة",
+        professionisti: "المهن الحرة والاستشارات", altro: "مجال آخر" } },
+      obiettivo: { t: "ماذا تنتظر قبل كل شيء من موقعك الجديد؟", o: {
+        clienti: "طلبات أكثر وعملاء جدد", vendite: "مبيعات أكثر عبر الإنترنت",
+        immagine: "صورة تليق بمستوى عملي", tempo: "عمل يدوي أقل وأتمتة أكثر" } },
+      partenza: { t: "هل لديك موقع بالفعل؟", o: {
+        no: "لا، سيكون الأول", rifare: "نعم، لكن يجب إعادة بنائه", migliorare: "نعم، يحتاج فقط إلى تحسين" } },
+      sito_attuale: { t: "ما عنوان موقعك الحالي؟", h: "اختياري: سنلقي عليه نظرة قبل أن نتحدث.", p: "www.example.com" },
+      a_vetrina: { t: "ما الذي يجب أن يجده الزائر أولًا؟", o: {
+        prodotti: "منتجاتك أو خدماتك", info: "المواعيد والعنوان وطريقة الوصول",
+        promo: "الجديد والعروض", spazio: "صور وفيديوهات لمكانك" } },
+      a_contatto: { t: "كيف يتواصل معك عملاؤك عادةً؟", o: {
+        telefono: "الهاتف", whatsapp: "واتساب", form: "نموذج على الموقع", social: "إنستغرام أو وسائل التواصل" } },
+      a_funzioni: { t: "هل تريد شيئًا إضافيًا؟", o: {
+        catalogo: "كتالوج للمنتجات", prenotazioni: "حجوزات عبر الإنترنت",
+        fedelta: "عروض أو برنامج ولاء", nessuna: "لا، يكفيني موقع واضح وسريع" } },
       b_vendita: { t: "ماذا تبيع عبر الإنترنت؟", o: {
         fisici: "منتجات مادية", digitali: "منتجات رقمية",
-        servizi: "خدمات قابلة للشراء", abbonamenti: "اشتراكات أو مشتريات متكررة" } },
-      b_prodotti: { t: "كم عدد منتجاتك؟", o: {
-        fino20: "حتى 20", da20a100: "من 20 إلى 100", oltre100: "أكثر من 100", da_definire: "لم يُحدَّد بعد" } },
-      b_priorita: { t: "ما الأهم بالنسبة إلى متجرك الإلكتروني؟", o: {
-        pagamenti: "دفع سهل وآمن", spedizioni: "الشحن والتتبّع",
-        area: "حساب العميل والطلبات", gestionale: "الربط بنظام الإدارة" } },
-      c_priorita: { t: "ما أولويتك الرئيسية؟", o: {
-        vendere: "البيع عبر الإنترنت", negozio: "جذب العملاء إلى المتجر",
-        contatti: "جمع بيانات التواصل", prenotazioni: "حجز الخدمات" } },
-      c_strumenti: { t: "هل تحتاج إلى ربط أدوات تستخدمها بالفعل؟", o: {
-        gestionale: "نظام الإدارة أو المخزون", agenda: "التقويم أو الحجوزات",
-        crm: "إدارة جهات الاتصال والبريد", nessuno: "لا، ليس الآن" } },
-      c_unione: { t: "كيف تريد الجمع بين المتجر والإنترنت؟", o: {
-        catalogo: "الكتالوج نفسه", promo: "عروض مخصّصة",
-        ritiro: "الاستلام من المتجر", esperienza: "تجربة واحدة متكاملة، عبر الإنترنت وفي المتجر" } },
-      d_azione: { t: "ماذا تريد أن يفعل زائر موقعك؟", o: {
-        preventivo: "طلب عرض سعر", call: "حجز مكالمة",
-        whatsapp: "مراسلتك عبر واتساب", form: "تعبئة نموذج" } },
-      d_convincere: { t: "ما الذي يجب أن يُقنع الزائر؟", o: {
-        servizi: "الخدمات والمزايا", metodo: "أسلوب العمل",
-        risultati: "النتائج والتقييمات", prezzi: "الأسعار أو الباقات" } },
-      d_area: { t: "هل تحتاج إلى منطقة خاصة؟", o: {
-        no: "لا، الموقع العام فقط", clienti: "نعم، منطقة للعملاء",
-        documenti: "نعم، للمستندات أو العروض", valutiamo: "لنقرّر ذلك معًا" } },
+        servizi: "خدمات أو تجارب", abbonamenti: "اشتراكات" } },
+      b_prodotti: { t: "كم منتجًا سيضم الكتالوج؟", o: {
+        fino20: "حتى 20", da20a100: "من 20 إلى 100", oltre100: "أكثر من 100", da_definire: "لا أعرف بعد" } },
+      b_priorita: { t: "في ماذا لا تقبل الحلول الوسط؟", o: {
+        pagamenti: "دفع سهل وآمن", spedizioni: "شحن وإرجاع دون عناء",
+        estero: "البيع خارج البلد أيضًا", gestionale: "الربط بنظام الإدارة",
+        area: "حساب للعميل مع طلباته" } },
+      c_priorita: { t: "ما الأهم اليوم؟", o: {
+        vendere: "البيع عبر الإنترنت", negozio: "جذب المزيد من الناس إلى المتجر", brand: "التعريف بالعلامة التجارية" } },
+      c_online: { t: "ماذا يجب أن يستطيع العميل فعله عبر الإنترنت؟", o: {
+        spedizione: "الشراء والتوصيل إلى المنزل", ritiro: "الطلب والاستلام من المتجر",
+        disponibilita: "معرفة المتوفر في المتجر", appuntamento: "حجز موعد" } },
+      c_strumenti: { t: "هل تستخدم برامج يجب ربطها بالموقع؟", o: {
+        gestionale: "نظام الإدارة أو المخزون", agenda: "تقويم المواعيد",
+        crm: "النشرة البريدية أو إدارة جهات الاتصال", nessuno: "لا، لا شيء" } },
+      d_azione: { t: "بعد أن يرى الزائر موقعك، ماذا تريد أن يفعل؟", o: {
+        preventivo: "أن يطلب منك عرض سعر", consulenza: "أن يحجز استشارة", whatsapp: "أن يراسلك أو يتصل بك" } },
+      d_convincere: { t: "ما الذي يدفع العملاء إلى اختيارك؟", o: {
+        servizi: "خدمات واضحة وفوائدها", metodo: "أسلوب عملك",
+        risultati: "النتائج والتقييمات", storia: "قصتك وفريقك", prezzi: "أسعار أو باقات واضحة" } },
+      d_area: { t: "هل يحتاج عملاؤك إلى منطقة خاصة؟", o: {
+        no: "لا، الموقع يكفي", clienti: "نعم، منطقة للعملاء",
+        documenti: "نعم، للمستندات والعروض", valutiamo: "لنتحدث عن ذلك معًا" } },
       atmosfera: { t: "ما الأجواء التي تريد أن ينقلها موقعك؟", h: "اختر الأقرب إليك.", o: {
-        minimal: "نظيفة وبسيطة", premium: "أنيقة وفاخرة",
-        dinamica: "حيوية، مع حركات", risultati: "عملية ومركّزة على النتائج" } },
+        minimal: "نظيفة وبسيطة", premium: "أنيقة وراقية",
+        dinamica: "حيوية، مع حركات", concreta: "عملية ومباشرة" } },
+      ispirazione: { t: "هل هناك موقع تحبه ويلهمك؟", h: "اختياري: يمكن أن يكون من مجال آخر.", p: "www.example.com" },
       identita: { t: "هل لديك شعار وألوان وخطوط؟", o: {
-        tutto: "نعم، لديّ كل شيء", logo: "لديّ الشعار فقط",
-        colori: "لديّ الألوان أو بعض التوجيهات فقط", no: "لا، أحتاج إلى هوية بصرية" } },
-      contenuti: { t: "من يُعدّ النصوص والصور؟", o: {
-        pronti: "جاهزة لديّ", parte: "لديّ جزء منها",
-        voi: "أنتم، وفق توجيهاتي", insieme: "نقرّر ذلك معًا" } },
-      investimento: { t: "ما نوع الاستثمار الذي تفكّر فيه؟", o: {
-        essenziale: "أساسي، الضروري فقط", equilibrato: "متوازن بين الجودة والسعر",
-        premium: "مميّز، تصميم وأداء", insieme: "أفضّل تحديده معًا" } },
-      tempi: { t: "متى تريد أن يكون الموقع جاهزًا؟", o: {
-        subito: "في أقرب وقت ممكن", settimane: "خلال 2–4 أسابيع",
-        mesi: "خلال 1–2 شهر", calma: "لا عجلة، الجودة أولًا" } },
+        tutto: "نعم، لديّ هوية كاملة", logo: "الشعار فقط", no: "لا، أحتاج إلى هوية بصرية" } },
+      contenuti: { t: "النصوص والصور: أين وصلت؟", o: {
+        pronti: "كل شيء جاهز", parte: "لديّ جزء، وأحتاج الباقي", voi: "أفضّل أن تتولّوا ذلك" } },
+      tempi: { t: "متى تريد أن يكون موقعك جاهزًا؟", o: {
+        subito: "في أقرب وقت ممكن", settimane: "خلال شهر",
+        mesi: "خلال شهرين أو ثلاثة", calma: "لا عجلة، الجودة أولًا" } },
       canale: { t: "كيف تفضّل أن نتواصل معك؟", o: {
-        email: "البريد الإلكتروني", telefono: "الهاتف", whatsapp: "واتساب", prenoto: "أحجز موعدًا الآن" } },
-      budget: { t: "ما الميزانية التي خصّصتها للموقع؟", h: "رقم تقريبي: يبقى بيننا ويساعدنا على اقتراح الحل المناسب.", o: {
+        email: "البريد الإلكتروني", telefono: "الهاتف", whatsapp: "واتساب", prenoto: "أحجز مكالمة الآن" } },
+      budget: { t: "ما الميزانية التي تفكّر فيها للموقع؟", h: "رقم تقريبي: يبقى بيننا ويساعدنا على اقتراح الحل المناسب.", o: {
         meno1000: "أقل من 4,000 درهم", da1000a2500: "من 4,000 إلى 10,000 درهم",
-        da2500a5000: "من 10,000 إلى 20,000 درهم", oltre5000: "أكثر من 20,000 درهم", non_so: "لا أعرف بعد" } }
+        da2500a5000: "من 10,000 إلى 20,000 درهم", oltre5000: "أكثر من 20,000 درهم", non_so: "أفضّل أن نتحدث عنها معًا" } }
     }
   }
 };

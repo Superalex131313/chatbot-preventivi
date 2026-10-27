@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Proposte di visual — Chatbot preventivi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0e0e10;color:#F3EEE6;font-family:Inter,sans-serif;padding:56px 48px 64px;width:2160px}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;padding:0 6px}
+.hd h1{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:56px;letter-spacing:-.5px}
+.hd h1 em{color:#CDB07A}
+.hd p{color:rgba(243,238,230,.62);font-size:15px;max-width:600px;text-align:right;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(5,392px);gap:30px 30px}
+.card{display:flex;flex-direction:column;gap:14px}
+.panel{position:relative;height:640px;border-radius:24px;overflow:hidden;border:1px solid rgba(243,238,230,.09);
+  background:radial-gradient(120% 70% at 50% 0%,rgba(243,238,230,.045),transparent 60%),#1b1a1f}
+.panel canvas{position:absolute;inset:0;width:100%;height:100%}
+.top{position:absolute;top:0;left:0;right:0;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:16px;z-index:2}
+.top .l{font-size:11px;letter-spacing:1.6px;color:rgba(243,238,230,.68);padding-left:10px}
+.top .m{display:flex;align-items:center;gap:10px;font-size:10.5px;letter-spacing:2.4px;text-transform:uppercase;color:rgba(243,238,230,.68)}
+.top .av{width:28px;height:28px;border-radius:50%;border:1px solid rgba(243,238,230,.4);display:grid;place-items:center;font-family:"Cormorant Garamond",serif;font-size:16px;color:#F3EEE6}
+.top .x{justify-self:end;width:32px;height:32px;border-radius:50%;border:1px solid rgba(243,238,230,.16);display:grid;place-items:center;color:rgba(243,238,230,.68);font-size:15px}
+.txt{position:absolute;left:0;right:0;top:238px;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:0 40px}
+.txt h2{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:46px;line-height:1}
+.txt p{font-size:13.5px;line-height:1.6;color:rgba(243,238,230,.7)}
+.txt .b{margin-top:6px;background:#F3EEE6;color:#141317;border-radius:999px;padding:12px 28px;font-size:13.5px;font-weight:500}
+.txt .n{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(243,238,230,.6)}
+.cap{display:flex;gap:12px;align-items:baseline;padding:0 4px}
+.cap b{font-family:"Cormorant Garamond",serif;font-size:30px;font-weight:500;color:#CDB07A;min-width:34px}
+.cap div{display:flex;flex-direction:column;gap:3px}
+.cap strong{font-weight:500;font-size:16px}
+.cap span{color:rgba(243,238,230,.62);font-size:12.5px;line-height:1.45}
+</style>
+</head>
+<body>
+<div class="hd">
+  <h1>Dieci visual al posto della <em>sfera di puntini</em></h1>
+  <p>Stessa chat, stessa schermata di benvenuto: cambia solo il visual. Nelle domande diventa uno sfondo tenue
+  e si muove lentamente (fermo per chi preferisce meno animazioni). Dimmi il numero che preferisci.</p>
+</div>
+<div class="grid" id="g"></div>
+<script>
+const V = [
+  ["Eclissi", "Un disco nero con una corona di luce dorata e un punto di luce che brilla: drammatica e lussuosa."],
+  ["Anello d'oro", "Un sottile anello d'oro sospeso, con un riflesso che gli gira intorno lentamente. Minimal da gioielleria."],
+  ["Seta", "Fili di seta che ondeggiano e si piegano come un tessuto prezioso. Morbida e sensuale."],
+  ["Quadrante", "Ispirata all'alta orologeria: tacche, orbite e piccoli astri d'oro. Precisione e artigianalità."],
+  ["Marmo nero", "Venature d'oro e avorio su marmo nero, come un intarsio. Materica e preziosa."],
+  ["Polvere d'oro", "Luci sfocate e polvere dorata che fluttua: calda, come una sera di gala."],
+  ["Art Déco", "Un ventaglio Déco di raggi e archi dorati. Classico anni '20, molto elegante."],
+  ["Diamante", "Il disegno tecnico di un brillante che ruota lentamente, con un bagliore sulle facce."],
+  ["Perla", "Una perla nera con riflessi iridescenti, morbida e luminosa. Raffinata e silenziosa."],
+  ["Velo di luce", "Veli di luce calda che si fondono come un'aurora, con una grana fotografica leggera."]
+];
+const g = document.getElementById("g");
+V.forEach(([n, d], i) => g.insertAdjacentHTML("beforeend", `
+<div class="card"><div class="panel"><canvas data-i="${i}"></canvas>
+  <div class="top"><span class="l">IT</span><span class="m"><span class="av">S</span>Il tuo Studio</span><span class="x">×</span></div>
+  <div class="txt"><h2>Benvenuto.</h2><p>In circa tre minuti capiamo insieme il sito perfetto per la tua attività.</p><span class="b">Iniziamo</span><span class="n">15 domande · nessun impegno</span></div>
+</div><div class="cap"><b>${String(i+1).padStart(2,"0")}</b><div><strong>${n}</strong><span>${d}</span></div></div></div>`));
+
+const ORO = "205,176,122", AV = "243,238,230";
+let seme = 7; const rnd = () => (seme = (seme * 16807) % 2147483647) / 2147483647;
+
+const DISEGNA = [
+  // 01 Eclissi
+  (c, w, h, cx, cy, R) => {
+    const cor = c.createRadialGradient(cx, cy, R * .95, cx, cy, R * 1.9);
+    cor.addColorStop(0, `rgba(${ORO},.55)`); cor.addColorStop(.25, `rgba(${ORO},.16)`); cor.addColorStop(1, "rgba(0,0,0,0)");
+    c.fillStyle = cor; c.fillRect(0, 0, w, h);
+    c.fillStyle = "#0d0c10"; c.beginPath(); c.arc(cx, cy, R, 0, 7); c.fill();
+    c.save(); c.shadowColor = `rgba(${ORO},.9)`; c.shadowBlur = 18;
+    c.strokeStyle = `rgba(${AV},.85)`; c.lineWidth = 1.2; c.beginPath(); c.arc(cx, cy, R, 0, 7); c.stroke(); c.restore();
+    const a = -0.75, px = cx + Math.cos(a) * R, py = cy + Math.sin(a) * R;
+    const s = c.createRadialGradient(px, py, 0, px, py, 26); s.addColorStop(0, "rgba(255,250,240,1)"); s.addColorStop(.2, `rgba(${ORO},.7)`); s.addColorStop(1, "rgba(0,0,0,0)");
+    c.fillStyle = s; c.fillRect(px - 30, py - 30, 60, 60);
+    c.strokeStyle = "rgba(255,250,240,.55)"; c.lineWidth = .8;
+    c.beginPath(); c.moveTo(px - 34, py); c.lineTo(px + 34, py); c.moveTo(px, py - 34); c.lineTo(px, py + 34); c.stroke();
+  },
+  // 02 Anello d'oro
+  (c, w, h, cx, cy, R) => {
+    const alone = c.createRadialGradient(cx, cy, R * .7, cx, cy, R * 1.4);
+    alone.addColorStop(0, "rgba(0,0,0,0)"); alone.addColorStop(.5, `rgba(${ORO},.07)`); alone.addColorStop(1, "rgba(0,0,0,0)");
+    c.fillStyle = alone; c.fillRect(0, 0, w, h);
+    for (let k = 0; k < 360; k++) {
+      const a0 = k / 360 * Math.PI * 2, a1 = a0 + Math.PI * 2 / 360 + .002;
+      const luce = .35 + .65 * Math.pow((Math.cos(a0 + 2.4) + 1) / 2, 3);
+      c.strokeStyle = `rgba(${ORO},${luce})`; c.lineWidth = 1.6;
+      c.beginPath(); c.arc(cx, cy, R, a0, a1); c.stroke();
+    }
+    c.strokeStyle = `rgba(${AV},.12)`; c.lineWidth = .7; c.beginPath(); c.arc(cx, cy, R * 1.12, 0, 7); c.stroke();
+    const a = -2.4 + Math.PI, px = cx + Math.cos(a) * R, py = cy + Math.sin(a) * R;
+    const s = c.createRadialGradient(px, py, 0, px, py, 30); s.addColorStop(0, "rgba(255,248,230,.95)"); s.addColorStop(.3, `rgba(${ORO},.35)`); s.addColorStop(1, "rgba(0,0,0,0)");
+    c.fillStyle = s; c.fillRect(px - 32, py - 32, 64, 64);
+  },
+  // 03 Seta
+  (c, w, h, cx, cy, R) => {
+    const n = 70;
+    for (let i = 0; i < n; i++) {
+      const t = i / (n - 1);
+      c.beginPath();
+      for (let x = -20; x <= w + 20; x += 4) {
+        const u = (x - cx) / w;
+        const piega = Math.sin(u * 5.2 + t * 2.6) * 70 * (1 - Math.abs(u) * .6);
+        const torsione = (t - .5) * 150 * Math.cos(u * 3.4 - .6);
+        const y = cy + piega + torsione;
+        x < -19 ? c.moveTo(x, y) : c.lineTo(x, y);
+      }
+      const centro = 1 - Math.abs(t - .5) * 2;
+      c.strokeStyle = i % 9 === 0 ? `rgba(${ORO},${.18 + .4 * centro})` : `rgba(${AV},${.04 + .16 * centro})`;
+      c.lineWidth = .8; c.stroke();
+    }
+  },
+  // 04 Quadrante
+  (c, w, h, cx, cy, R) => {
+    c.lineWidth = .8;
+    [1, .78, .52, .3].forEach((k, j) => { c.strokeStyle = `rgba(${AV},${j === 0 ? .3 : .12})`; c.beginPath(); c.arc(cx, cy, R * k, 0, 7); c.stroke(); });
+    for (let t = 0; t < 60; t++) {
+      const a = t / 60 * Math.PI * 2, lungo = t % 5 === 0;
+      const r1 = R * 1.04, r2 = R * (lungo ? 1.13 : 1.08);
+      c.strokeStyle = lungo ? `rgba(${ORO},.85)` : `rgba(${AV},.35)`; c.lineWidth = lungo ? 1.4 : .7;
+      c.beginPath(); c.moveTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); c.lineTo(cx + Math.cos(a) * r2, cy + Math.sin(a) * r2); c.stroke();
+    }
+    [[.9, .32, .5], [.66, .4, -.6], [.44, .5, 1.3]].forEach(([k, schiaccia, rot], j) => {
+      c.save(); c.translate(cx, cy); c.rotate(rot); c.scale(1, schiaccia);
+      c.strokeStyle = `rgba(${ORO},.32)`; c.lineWidth = .9 / schiaccia * .7; c.beginPath(); c.arc(0, 0, R * k, 0, 7); c.stroke(); c.restore();
+      const a = 1.1 + j * 2.1, x = Math.cos(a) * R * k, y = Math.sin(a) * R * k * schiaccia;
+      const px = cx + x * Math.cos(rot) - y * Math.sin(rot), py = cy + x * Math.sin(rot) + y * Math.cos(rot);
+      c.fillStyle = `rgb(${ORO})`; c.beginPath(); c.arc(px, py, 2.6, 0, 7); c.fill();
+    });
+    c.fillStyle = `rgba(${ORO},.9)`; c.beginPath(); c.arc(cx, cy, 2, 0, 7); c.fill();
+  },
+  // 05 Marmo nero
+  (c, w, h, cx, cy, R) => {
+    const fondo = c.createRadialGradient(cx, cy, 0, cx, cy, R * 2.2);
+    fondo.addColorStop(0, "rgba(46,44,50,.9)"); fondo.addColorStop(1, "rgba(27,26,31,0)");
+    c.fillStyle = fondo; c.fillRect(0, 0, w, h);
+    const vena = (x, y, a, passi, spess, col, al, glow) => {
+      const punti = [[x, y, a]];
+      for (let s = 0; s < passi; s++) {
+        a += (rnd() - .5) * .14 + Math.sin(s * .05) * .02;
+        x += Math.cos(a) * 6; y += Math.sin(a) * 6; punti.push([x, y, a]);
+      }
+      c.save(); if (glow) { c.shadowColor = `rgba(${ORO},.8)`; c.shadowBlur = 8; }
+      c.beginPath(); punti.forEach(([px, py], k) => k ? c.lineTo(px, py) : c.moveTo(px, py));
+      c.strokeStyle = `rgba(${col},${al})`; c.lineWidth = spess; c.lineJoin = "round"; c.stroke(); c.restore();
+      if (glow) punti.forEach(([px, py, pa], k) => {
+        if (k % 22 === 11 && rnd() < .6) vena(px, py, pa + (rnd() < .5 ? .5 : -.5), 14 + rnd() * 16, spess * .5, col, al * .6, false);
+      });
+    };
+    for (let v = 0; v < 18; v++) vena(rnd() * w * 1.4 - w * .2, -10, .9 + rnd() * .5, 130, .4 + rnd() * .6, AV, .05 + rnd() * .1, false);
+    vena(-10, h * .18, .62, 120, 1.3, ORO, .85, true);
+    vena(w * .7, -10, 1.75, 120, .9, ORO, .6, true);
+  },
+  // 06 Polvere d'oro
+  (c, w, h, cx, cy, R) => {
+    for (let i = 0; i < 90; i++) {
+      const ang = rnd() * 7, dist = Math.pow(rnd(), .7) * R * 1.6;
+      const x = cx + Math.cos(ang) * dist, y = cy + Math.sin(ang) * dist * .75, r = 3 + Math.pow(rnd(), 2.2) * 30;
+      const gr = c.createRadialGradient(x, y, 0, x, y, r);
+      const al = .05 + rnd() * .22;
+      gr.addColorStop(0, `rgba(${ORO},${al})`); gr.addColorStop(.75, `rgba(${ORO},${al * .6})`); gr.addColorStop(1, "rgba(0,0,0,0)");
+      c.fillStyle = gr; c.beginPath(); c.arc(x, y, r, 0, 7); c.fill();
+    }
+    for (let i = 0; i < 700; i++) {
+      const ang = rnd() * 7, dist = Math.pow(rnd(), .55) * R * 1.9;
+      c.fillStyle = `rgba(${rnd() < .7 ? ORO : AV},${rnd() * .7})`;
+      c.fillRect(cx + Math.cos(ang) * dist, cy + Math.sin(ang) * dist * .75, 1.1, 1.1);
+    }
+  },
+  // 07 Art Déco
+  (c, w, h, cx, cy, R) => {
+    const base = cy + R * .55;
+    c.lineWidth = .9;
+    [1, .86, .72, .58].forEach((k, j) => { c.strokeStyle = `rgba(${ORO},${.75 - j * .12})`; c.beginPath(); c.arc(cx, base, R * 1.35 * k, Math.PI, 0); c.stroke(); });
+    for (let r = 0; r <= 24; r++) {
+      const a = Math.PI + r / 24 * Math.PI, lungo = r % 2 === 0;
+      const r1 = R * .3, r2 = R * 1.35 * (lungo ? .86 : .72);
+      c.strokeStyle = `rgba(${lungo ? ORO : AV},${lungo ? .5 : .22})`;
+      c.beginPath(); c.moveTo(cx + Math.cos(a) * r1, base + Math.sin(a) * r1); c.lineTo(cx + Math.cos(a) * r2, base + Math.sin(a) * r2); c.stroke();
+    }
+    c.strokeStyle = `rgba(${ORO},.8)`; c.beginPath(); c.arc(cx, base, R * .3, Math.PI, 0); c.stroke();
+    c.beginPath(); c.moveTo(cx - R * 1.6, base); c.lineTo(cx + R * 1.6, base); c.strokeStyle = `rgba(${ORO},.45)`; c.stroke();
+  },
+  // 08 Diamante
+  (c, w, h, cx, cy, R) => {
+    const rotY = .35, tilt = .32;
+    const P = (x, y, z) => { const x1 = x * Math.cos(rotY) - z * Math.sin(rotY), z1 = x * Math.sin(rotY) + z * Math.cos(rotY);
+      const y1 = y * Math.cos(tilt) - z1 * Math.sin(tilt); return [cx + x1 * R, cy - R * .15 + y1 * R]; };
+    const anello = (n, r, y, off) => Array.from({ length: n }, (_, i) => { const a = (i + (off || 0)) / n * Math.PI * 2; return P(Math.cos(a) * r, y, Math.sin(a) * r); });
+    const tavola = anello(8, .5, -.42), cintura = anello(16, 1, 0), culet = P(0, .95, 0);
+    const linea = (a, b, al, oro) => { c.strokeStyle = `rgba(${oro ? ORO : AV},${al})`; c.beginPath(); c.moveTo(a[0], a[1]); c.lineTo(b[0], b[1]); c.stroke(); };
+    c.lineWidth = .8;
+    for (let i = 0; i < 16; i++) { linea(cintura[i], cintura[(i + 1) % 16], .55); linea(cintura[i], culet, .18, i % 4 === 0); }
+    for (let i = 0; i < 8; i++) { linea(tavola[i], tavola[(i + 1) % 8], .6, true); linea(tavola[i], cintura[i * 2], .35); linea(tavola[i], cintura[(i * 2 + 1) % 16], .25); linea(tavola[(i + 1) % 8], cintura[(i * 2 + 1) % 16], .25); }
+    const sx = tavola[2][0], sy = tavola[2][1];
+    const s = c.createRadialGradient(sx, sy, 0, sx, sy, 22); s.addColorStop(0, "rgba(255,250,240,.95)"); s.addColorStop(1, "rgba(0,0,0,0)");
+    c.fillStyle = s; c.fillRect(sx - 24, sy - 24, 48, 48);
+    c.strokeStyle = "rgba(255,250,240,.7)"; c.beginPath(); c.moveTo(sx - 20, sy); c.lineTo(sx + 20, sy); c.moveTo(sx, sy - 20); c.lineTo(sx, sy + 20); c.stroke();
+  },
+  // 09 Perla
+  (c, w, h, cx, cy, R) => {
+    const r = R * .78;
+    const ombra = c.createRadialGradient(cx, cy + r * .9, 0, cx, cy + r * .9, r * 1.2);
+    ombra.addColorStop(0, "rgba(0,0,0,.45)"); ombra.addColorStop(1, "rgba(0,0,0,0)"); c.fillStyle = ombra; c.fillRect(0, 0, w, h);
+    const corpo = c.createRadialGradient(cx - r * .35, cy - r * .4, r * .05, cx, cy, r);
+    corpo.addColorStop(0, "#6c6870"); corpo.addColorStop(.35, "#36333b"); corpo.addColorStop(1, "#141317");
+    c.fillStyle = corpo; c.beginPath(); c.arc(cx, cy, r, 0, 7); c.fill();
+    c.save(); c.beginPath(); c.arc(cx, cy, r, 0, 7); c.clip();
+    const iri = c.createConicGradient(0.6, cx, cy);
+    [["rgba(205,176,122,.22)", 0], ["rgba(150,120,190,.18)", .25], ["rgba(110,170,170,.16)", .5], ["rgba(220,150,160,.16)", .75], ["rgba(205,176,122,.22)", 1]].forEach(([col, p]) => iri.addColorStop(p, col));
+    c.globalCompositeOperation = "screen";
+    c.fillStyle = iri; c.fill();
+    c.globalCompositeOperation = "source-over";
+    const luce = c.createRadialGradient(cx - r * .38, cy - r * .42, 0, cx - r * .38, cy - r * .42, r * .45);
+    luce.addColorStop(0, "rgba(255,252,245,.75)"); luce.addColorStop(1, "rgba(255,252,245,0)");
+    c.fillStyle = luce; c.fillRect(0, 0, w, h); c.restore();
+    c.strokeStyle = `rgba(${AV},.18)`; c.lineWidth = .8; c.beginPath(); c.arc(cx, cy, r, 0, 7); c.stroke();
+  },
+  // 10 Velo di luce
+  (c, w, h, cx, cy, R) => {
+    c.save(); c.filter = "blur(46px)";
+    [[cx - 60, cy - 70, 150, 70, -.5, `rgba(${ORO},.55)`], [cx + 70, cy - 10, 160, 60, .4, `rgba(${AV},.28)`],
+     [cx - 10, cy + 60, 180, 50, -.2, "rgba(140,110,170,.28)"], [cx + 40, cy - 110, 90, 40, .8, `rgba(${ORO},.4)`]]
+      .forEach(([x, y, rx, ry, rot, col]) => { c.fillStyle = col; c.beginPath(); c.ellipse(x, y, rx, ry, rot, 0, 7); c.fill(); });
+    c.restore();
+    for (let i = 0; i < 26000; i++) { c.fillStyle = `rgba(255,255,255,${rnd() * .06})`; c.fillRect(rnd() * w, rnd() * h, 1, 1); }
+  }
+];
+
+document.fonts.ready.then(() => document.querySelectorAll("canvas").forEach(cv => {
+  const d = window.devicePixelRatio || 1, w = cv.clientWidth, h = cv.clientHeight;
+  cv.width = w * d; cv.height = h * d;
+  const c = cv.getContext("2d"); c.scale(d, d);
+  seme = 7 + +cv.dataset.i * 101;
+  DISEGNA[+cv.dataset.i](c, w, h, w / 2, h * .42, Math.min(w * .36, h * .27));
+}));
+</script>
+</body>
+</html>

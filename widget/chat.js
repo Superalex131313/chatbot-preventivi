@@ -843,6 +843,7 @@
       "Settore: " + r("settore"),
       "Punto di partenza: " + r("partenza"),
       "Sito attuale: " + (S.risposte.sito_attuale && percorso().includes(q("sito_attuale")) ? S.risposte.sito_attuale : "—"),
+      "Sito di ispirazione: " + (S.risposte.ispirazione || "—"),
       "", linea, "",
       "3. TUTTE LE RISPOSTE"
     ];

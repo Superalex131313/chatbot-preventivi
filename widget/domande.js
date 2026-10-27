@@ -16,6 +16,11 @@
      quando    la domanda compare solo se questa condizione è vera
      conta     false = non entra nel conteggio "Domanda X di Y"
      conferma  codice della micro-frase mostrata dopo la risposta
+     facoltativa  (testo) si può saltare
+     valuta    nel report la risposta resta nella lingua (e valuta) del cliente
+
+   Ogni ramo ha 3 domande: se ne aggiungi una, aggiungila a tutti i rami
+   così il contatore "Domanda X di Y" resta preciso fin dall'inizio.
    ===================================================================== */
 
 (function () {
@@ -23,69 +28,71 @@
   const ramo = (a, r) => a.tipo === r;
 
   window.PreventivoDomande = [
+    /* ---- PROFILO ---- */
     { id: "nome", tipo: "testo", sezione: "profilo", obbligatoria: true, conferma: "nome" },
 
     { id: "tipo", tipo: "singola", sezione: "profilo", conferma: "partenza",
       opzioni: ["negozio", "ecommerce", "entrambi", "servizi"] },
 
     { id: "settore", tipo: "singola", sezione: "profilo", altro: "altro",
-      opzioni: ["moda", "food", "beauty", "casa", "professionisti", "altro"] },
+      opzioni: ["moda", "food", "beauty", "casa", "ospitalita", "professionisti", "altro"] },
 
-    { id: "obiettivo", tipo: "multipla", max: 2, sezione: "profilo",
-      opzioni: ["vendere", "contatti", "prenotazioni", "presentare"] },
+    { id: "obiettivo", tipo: "singola", sezione: "profilo", conferma: "obiettivo",
+      opzioni: ["clienti", "vendite", "immagine", "tempo"] },
 
     { id: "partenza", tipo: "singola", sezione: "profilo",
-      opzioni: ["zero_chiare", "zero_guida", "rifare", "migliorare"] },
+      opzioni: ["no", "rifare", "migliorare"] },
 
-    { id: "sito_attuale", tipo: "testo", sezione: "profilo", conta: false, formato: "url",
+    { id: "sito_attuale", tipo: "testo", sezione: "profilo", conta: false, formato: "url", facoltativa: true,
       quando: a => a.partenza === "rifare" || a.partenza === "migliorare" },
 
-    /* ---- RAMO A — Negozio / punto vendita ---- */
+    /* ---- RAMO A — Negozio o spazio fisico ---- */
     { id: "a_vetrina", tipo: "multipla", max: 2, sezione: "progetto", quando: a => ramo(a, "negozio"),
-      opzioni: ["prodotti", "info", "promo", "foto"] },
-    { id: "a_contatto", tipo: "singola", sezione: "progetto", quando: a => ramo(a, "negozio"),
-      opzioni: ["telefono", "whatsapp", "form", "prenotazione"] },
+      opzioni: ["prodotti", "info", "promo", "spazio"] },
+    { id: "a_contatto", tipo: "multipla", sezione: "progetto", quando: a => ramo(a, "negozio"),
+      opzioni: ["telefono", "whatsapp", "form", "social"] },
     { id: "a_funzioni", tipo: "multipla", esclusiva: "nessuna", sezione: "progetto", quando: a => ramo(a, "negozio"),
       opzioni: ["catalogo", "prenotazioni", "fedelta", "nessuna"] },
 
-    /* ---- RAMO B — E-commerce ---- */
+    /* ---- RAMO B — Vendita online ---- */
     { id: "b_vendita", tipo: "multipla", sezione: "progetto", quando: a => ramo(a, "ecommerce"),
       opzioni: ["fisici", "digitali", "servizi", "abbonamenti"] },
     { id: "b_prodotti", tipo: "singola", sezione: "progetto", quando: a => ramo(a, "ecommerce"),
       opzioni: ["fino20", "da20a100", "oltre100", "da_definire"] },
     { id: "b_priorita", tipo: "multipla", max: 2, sezione: "progetto", quando: a => ramo(a, "ecommerce"),
-      opzioni: ["pagamenti", "spedizioni", "area", "gestionale"] },
+      opzioni: ["pagamenti", "spedizioni", "estero", "gestionale", "area"] },
 
-    /* ---- RAMO C — Sia negozio che online ---- */
+    /* ---- RAMO C — Negozio e online ---- */
     { id: "c_priorita", tipo: "singola", sezione: "progetto", quando: a => ramo(a, "entrambi"),
-      opzioni: ["vendere", "negozio", "contatti", "prenotazioni"] },
+      opzioni: ["vendere", "negozio", "brand"] },
+    { id: "c_online", tipo: "multipla", sezione: "progetto", quando: a => ramo(a, "entrambi"),
+      opzioni: ["spedizione", "ritiro", "disponibilita", "appuntamento"] },
     { id: "c_strumenti", tipo: "multipla", esclusiva: "nessuno", sezione: "progetto", quando: a => ramo(a, "entrambi"),
       opzioni: ["gestionale", "agenda", "crm", "nessuno"] },
-    { id: "c_unione", tipo: "multipla", sezione: "progetto", quando: a => ramo(a, "entrambi"),
-      opzioni: ["catalogo", "promo", "ritiro", "esperienza"] },
 
-    /* ---- RAMO D — Servizi / attività su contatto ---- */
+    /* ---- RAMO D — Servizi e consulenze ---- */
     { id: "d_azione", tipo: "singola", sezione: "progetto", quando: a => ramo(a, "servizi"),
-      opzioni: ["preventivo", "call", "whatsapp", "form"] },
+      opzioni: ["preventivo", "consulenza", "whatsapp"] },
     { id: "d_convincere", tipo: "multipla", max: 2, sezione: "progetto", quando: a => ramo(a, "servizi"),
-      opzioni: ["servizi", "metodo", "risultati", "prezzi"] },
+      opzioni: ["servizi", "metodo", "risultati", "storia", "prezzi"] },
     { id: "d_area", tipo: "singola", sezione: "progetto", quando: a => ramo(a, "servizi"),
       opzioni: ["no", "clienti", "documenti", "valutiamo"] },
 
-    /* ---- DOMANDE FINALI (per tutti) ---- */
+    /* ---- STILE (per tutti) ---- */
     { id: "atmosfera", tipo: "singola", sezione: "stile", conferma: "scelta",
-      opzioni: ["minimal", "premium", "dinamica", "risultati"] },
+      opzioni: ["minimal", "premium", "dinamica", "concreta"] },
+    { id: "ispirazione", tipo: "testo", sezione: "stile", formato: "url", facoltativa: true },
     { id: "identita", tipo: "singola", sezione: "stile",
-      opzioni: ["tutto", "logo", "colori", "no"] },
+      opzioni: ["tutto", "logo", "no"] },
     { id: "contenuti", tipo: "singola", sezione: "stile",
-      opzioni: ["pronti", "parte", "voi", "insieme"] },
-    { id: "investimento", tipo: "singola", sezione: "dettagli", conferma: "chiaro",
-      opzioni: ["essenziale", "equilibrato", "premium", "insieme"] },
+      opzioni: ["pronti", "parte", "voi"] },
+
+    /* ---- DETTAGLI (per tutti) ---- */
     { id: "tempi", tipo: "singola", sezione: "dettagli", conferma: "tempi",
       opzioni: ["subito", "settimane", "mesi", "calma"] },
     { id: "canale", tipo: "singola", sezione: "dettagli",
       opzioni: ["email", "telefono", "whatsapp", "prenoto"] },
-    // valuta: true = nel report la risposta resta nella lingua (e quindi nella valuta) del cliente
+    // valuta: true = nel report la fascia resta nella valuta vista dal cliente
     { id: "budget", tipo: "singola", sezione: "dettagli", valuta: true,
       opzioni: ["meno1000", "da1000a2500", "da2500a5000", "oltre5000", "non_so"] }
   ];
