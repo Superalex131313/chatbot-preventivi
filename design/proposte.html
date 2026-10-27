@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Proposte di design — Chatbot preventivi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ====== Tavola ====== */
+:root{
+  --ivory:#F3EEE6; --ivory-2:rgba(243,238,230,.62); --ivory-3:rgba(243,238,230,.14);
+  --gold:#C9A96E; --black:#050505;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#111;color:var(--ivory);font-family:Inter,system-ui,sans-serif;padding:56px 48px 64px;width:2160px}
+.board-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:40px;padding:0 6px}
+.board-hd h1{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:56px;letter-spacing:-.5px}
+.board-hd h1 em{color:var(--gold)}
+.board-hd p{color:var(--ivory-2);font-size:15px;max-width:560px;text-align:right;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(5,392px);gap:28px 30px}
+.card{display:flex;flex-direction:column;gap:14px}
+.cap{display:flex;gap:12px;align-items:baseline;padding:0 4px}
+.cap b{font-family:"Cormorant Garamond",serif;font-size:30px;font-weight:500;color:var(--gold);min-width:34px}
+.cap div{display:flex;flex-direction:column;gap:3px}
+.cap strong{font-weight:500;font-size:16px;letter-spacing:.2px}
+.cap span{color:var(--ivory-2);font-size:12.5px;line-height:1.45}
+
+/* ====== Scena (il "sito" dietro la chat) ====== */
+.stage{position:relative;height:720px;border-radius:18px;overflow:hidden;background:var(--black);
+  padding:22px 18px 0;display:flex;flex-direction:column;align-items:center;border:1px solid rgba(255,255,255,.06)}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+
+/* ====== Pannello chat (base comune) ====== */
+.panel{position:relative;z-index:2;width:100%;height:600px;display:flex;flex-direction:column;
+  background:#0b0b0b;border:1px solid rgba(255,255,255,.08);border-radius:22px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.hd{display:flex;align-items:center;gap:12px;padding:18px 20px 14px}
+.av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;flex:none;
+  font-family:"Cormorant Garamond",serif;font-size:19px;color:var(--black);background:var(--ivory)}
+.who{display:flex;flex-direction:column;flex:1;line-height:1.25}
+.who b{font-weight:500;font-size:14px}
+.who span{font-size:11.5px;color:var(--ivory-2);display:flex;align-items:center;gap:6px}
+.who span:before{content:"";width:6px;height:6px;border-radius:50%;background:#7FB58A}
+.lang{font-size:11px;letter-spacing:1.2px;color:var(--ivory-2)}
+.lang i{font-style:normal;color:var(--ivory)}
+.x{width:30px;height:30px;border-radius:50%;border:1px solid var(--ivory-3);display:grid;place-items:center;color:var(--ivory-2);font-size:15px}
+.prog{height:2px;background:var(--ivory-3);margin:0 20px}
+.prog i{display:block;height:100%;width:43%;background:var(--gold)}
+.step{font-size:11px;color:var(--ivory-2);letter-spacing:1.4px;text-transform:uppercase;padding:10px 20px 0}
+.rail{display:none}
+.big{display:none}
+.body{flex:1;padding:22px 20px 10px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.prev{display:none}
+.ok{font-size:13px;color:var(--gold);font-style:italic;font-family:"Cormorant Garamond",serif;font-size:17px}
+.q{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:31px;line-height:1.12;letter-spacing:-.3px}
+.hint{font-size:13px;color:var(--ivory-2);margin-bottom:8px}
+.opts{list-style:none;display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.14);font-size:14px}
+.opt .n,.opt .d,.opt .arr{display:none}
+.opt .t{flex:1}
+.opt.sel{border-color:var(--gold);box-shadow:inset 0 0 0 1px rgba(201,169,110,.35)}
+.opt.sel:after{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.ft{display:flex;align-items:center;justify-content:space-between;padding:12px 20px 18px;font-size:12.5px;color:var(--ivory-2)}
+.back{display:flex;align-items:center;gap:6px}
+.inputbar{display:none}
+
+/* ====== Pulsante di apertura ====== */
+.launch{position:relative;z-index:2;margin:20px 0 0 auto;display:flex;align-items:center;gap:10px;
+  padding:8px 18px 8px 8px;border-radius:999px;background:var(--ivory);color:var(--black);font-size:13.5px;font-weight:500;
+  box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.lav{width:32px;height:32px;border-radius:50%;background:var(--black);color:var(--ivory);display:grid;place-items:center;
+  font-family:"Cormorant Garamond",serif;font-size:17px}
+
+/* ================================================================
+   01 — NOIR ATELIER: nero pieno, serif avorio, pillole con bordo oro
+   ================================================================ */
+/* (usa la base) */
+
+/* ================================================================
+   02 — ORBITA: griglia prospettica, vetro, barra in stile screenshot
+   ================================================================ */
+.v2 .panel{background:rgba(14,14,18,.5);backdrop-filter:blur(2px);border-color:rgba(255,255,255,.1)}
+.v2 .av{border-radius:12px;background:linear-gradient(160deg,#F7F3EC,#D9D2C6)}
+.v2 .q{font-family:Inter;font-weight:300;font-size:26px;letter-spacing:-.6px;line-height:1.2}
+.v2 .ok{font-family:Inter;font-style:normal;font-size:12.5px;color:var(--ivory-2)}
+.v2 .opt{border-radius:16px;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.09)}
+.v2 .opt.sel{background:var(--ivory);color:var(--black);border-color:var(--ivory);box-shadow:none}
+.v2 .opt.sel:after{background:var(--black)}
+.v2 .prog i{background:linear-gradient(90deg,rgba(243,238,230,.3),var(--ivory))}
+.v2 .ft{display:none}
+.v2 .inputbar{display:flex;align-items:center;gap:12px;margin:8px 16px 16px;padding:8px 8px 8px 16px;border-radius:999px;
+  background:rgba(20,20,26,.9);border:1px solid rgba(255,255,255,.08);color:var(--ivory-2);font-size:13px}
+.v2 .inputbar span{flex:1}
+.v2 .inputbar b{width:36px;height:36px;border-radius:50%;background:#fff;color:#000;display:grid;place-items:center;font-size:16px;font-weight:500}
+.v2 .launch{border-radius:18px}
+
+/* ================================================================
+   03 — POLVERE DI STELLE: sfera di particelle, testo centrato
+   ================================================================ */
+.v3 .stage{background:#1d1c21}
+.v3 .panel{background:transparent;border:none;box-shadow:none}
+.v3 .hd{justify-content:center}
+.v3 .who,.v3 .lang{display:none}
+.v3 .x{position:absolute;right:18px;top:18px}
+.v3 .av{background:transparent;color:var(--ivory);border:1px solid rgba(243,238,230,.4)}
+.v3 .prog{margin:0 70px}
+.v3 .step{text-align:center}
+.v3 .body{align-items:center;text-align:center;padding-top:40px}
+.v3 .q{font-size:33px}
+.v3 .opts{width:100%;gap:0;margin-top:6px}
+.v3 .opt{border:none;border-radius:0;border-top:1px solid rgba(243,238,230,.12);justify-content:center;padding:15px 10px;font-size:14.5px;letter-spacing:.2px}
+.v3 .opt:last-child{border-bottom:1px solid rgba(243,238,230,.12)}
+.v3 .opt .t{flex:none}
+.v3 .opt.sel{box-shadow:none;color:var(--gold)}
+.v3 .opt.sel:after{display:none}
+.v3 .opt.sel .t:before{content:"— "}.v3 .opt.sel .t:after{content:" —"}
+.v3 .ft{justify-content:center;gap:28px}
+.v3 .launch{background:rgba(29,28,33,.85);color:var(--ivory);border:1px solid rgba(243,238,230,.25);backdrop-filter:blur(8px)}
+.v3 .lav{background:var(--ivory);color:#1d1c21}
+
+/* ================================================================
+   04 — GALLERIA: contatore grande, maiuscoletto, schede numerate
+   ================================================================ */
+.v4 .panel{background:#080808;border-radius:6px}
+.v4 .who b{text-transform:uppercase;letter-spacing:2.5px;font-size:11.5px}
+.v4 .av{border-radius:0;background:transparent;color:var(--ivory);font-family:Inter;font-weight:300;font-size:12px;border:1px solid var(--ivory-3)}
+.v4 .x{border-radius:0}
+.v4 .step{display:none}
+.v4 .big{display:flex;align-items:baseline;gap:10px;padding:18px 20px 0;font-weight:200;font-size:52px;line-height:1}
+.v4 .big small{font-size:12px;letter-spacing:2.5px;color:var(--ivory-2);font-weight:400}
+.v4 .ok{font-family:Inter;font-style:normal;text-transform:uppercase;letter-spacing:2.5px;font-size:10.5px}
+.v4 .q{font-size:28px}
+.v4 .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.v4 .opt{flex-direction:column;align-items:flex-start;gap:28px;border-radius:4px;padding:14px;min-height:118px;font-size:13px;background:#0e0e0e}
+.v4 .opt .n{display:block;font-size:10.5px;letter-spacing:2px;color:var(--ivory-2)}
+.v4 .opt .t{text-transform:uppercase;letter-spacing:1.6px;font-size:11.5px;line-height:1.5;flex:none}
+.v4 .opt.sel{background:#14120e}
+.v4 .opt.sel:after{position:absolute;display:none}
+.v4 .opt.sel .n{color:var(--gold)}
+.v4 .prog{margin-top:2px}
+.v4 .back{text-transform:uppercase;letter-spacing:2px;font-size:10.5px}
+.v4 .time{text-transform:uppercase;letter-spacing:2px;font-size:10.5px}
+.v4 .launch{border-radius:4px;text-transform:uppercase;letter-spacing:2px;font-size:11px;background:transparent;color:var(--ivory);border:1px solid rgba(243,238,230,.5)}
+.v4 .lav{border-radius:2px;background:var(--ivory);color:#000}
+
+/* ================================================================
+   05 — RIFLETTORE: fascio di luce, grana, testo maiuscolo sottile
+   ================================================================ */
+.v5 .panel{background:rgba(6,6,6,.55);border-color:rgba(255,255,255,.07);backdrop-filter:blur(3px)}
+.v5 .q{font-family:Inter;font-weight:300;text-transform:uppercase;letter-spacing:3px;font-size:20px;line-height:1.45}
+.v5 .ok{font-family:Inter;font-style:normal;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--ivory-2)}
+.v5 .opt{border-radius:0;border:none;border-left:1px solid rgba(243,238,230,.18);padding:12px 16px;text-transform:uppercase;letter-spacing:2px;font-size:11.5px}
+.v5 .opt.sel{border-left:2px solid var(--ivory);box-shadow:none;background:linear-gradient(90deg,rgba(243,238,230,.1),transparent)}
+.v5 .opt.sel:after{display:none}
+.v5 .prog i{background:var(--ivory)}
+.v5 .launch{background:transparent;color:var(--ivory);border:1px solid rgba(243,238,230,.45);text-transform:uppercase;letter-spacing:2px;font-size:11px}
+.v5 .lav{background:transparent;border:1px solid rgba(243,238,230,.6);color:var(--ivory)}
+
+/* ================================================================
+   06 — EDITORIALE: titolo da rivista, righe con numero e freccia
+   ================================================================ */
+.v6 .panel{background:#0a0a0a;border-radius:14px}
+.v6 .q{font-size:38px;font-style:italic;line-height:1.02}
+.v6 .opts{gap:0;margin-top:4px}
+.v6 .opt{border:none;border-radius:0;border-bottom:1px solid rgba(243,238,230,.1);padding:15px 2px;gap:16px}
+.v6 .opt .n{display:block;font-family:"Cormorant Garamond",serif;font-style:italic;font-size:17px;color:var(--ivory-2);width:18px}
+.v6 .opt .t{font-family:"Cormorant Garamond",serif;font-size:21px}
+.v6 .opt .arr{display:block;color:var(--ivory-2)}
+.v6 .opt.sel{box-shadow:none}
+.v6 .opt.sel:after{display:none}
+.v6 .opt.sel .n,.v6 .opt.sel .arr,.v6 .opt.sel .t{color:var(--gold)}
+.v6 .launch{background:#0a0a0a;color:var(--ivory);border:1px solid rgba(201,169,110,.55);font-family:"Cormorant Garamond",serif;font-size:17px;font-style:italic;font-weight:400}
+.v6 .lav{background:var(--gold);color:#000;font-style:normal}
+
+/* ================================================================
+   07 — CONCIERGE: conversazione a nuvolette, raffinata
+   ================================================================ */
+.v7 .panel{background:#0c0c0c}
+.v7 .av{background:linear-gradient(145deg,#E2CB9C,#A9884F);color:#111}
+.v7 .body{gap:10px;padding-top:16px}
+.v7 .prev{display:block;align-self:flex-end;background:rgba(201,169,110,.14);border:1px solid rgba(201,169,110,.35);color:var(--ivory);
+  padding:10px 14px;border-radius:16px 16px 4px 16px;font-size:13px}
+.v7 .bub{align-self:flex-start;background:#161616;border:1px solid rgba(255,255,255,.06);border-radius:16px 16px 16px 4px;padding:14px 16px;max-width:88%}
+.v7 .ok{font-family:Inter;font-style:normal;font-size:13px;color:var(--ivory);margin-bottom:6px}
+.v7 .q{font-family:Inter;font-size:15px;font-weight:500;letter-spacing:0;line-height:1.4}
+.v7 .hint{margin:4px 0 0}
+.v7 .opts{flex-direction:row;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin-top:6px}
+.v7 .opt{padding:10px 15px;font-size:13px;border-color:rgba(201,169,110,.4);color:var(--ivory)}
+.v7 .opt .t{flex:none}
+.v7 .opt.sel{background:var(--gold);color:#111;border-color:var(--gold)}
+.v7 .opt.sel:after{display:none}
+.v7 .launch{background:linear-gradient(145deg,#E2CB9C,#B39257);color:#111}
+.v7 .lav{background:#111;color:#E2CB9C}
+
+/* ================================================================
+   08 — VETRO FUMÉ: pannello satinato su luce calda sfocata
+   ================================================================ */
+.v8 .stage{background:radial-gradient(60% 40% at 25% 30%,rgba(150,110,60,.45),transparent 70%),
+  radial-gradient(50% 40% at 80% 75%,rgba(90,80,120,.35),transparent 70%),#070707}
+.v8 .panel{background:rgba(255,255,255,.055);backdrop-filter:blur(26px) saturate(120%);border-color:rgba(255,255,255,.14);border-radius:28px}
+.v8 .opt{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12);border-radius:18px}
+.v8 .opt .d{display:block;font-size:11.5px;color:var(--ivory-2);text-align:right}
+.v8 .opt.sel{background:rgba(255,255,255,.14);border-color:rgba(243,238,230,.6);box-shadow:none}
+.v8 .opt.sel:after{background:var(--ivory)}
+.v8 .prog{border-radius:2px}.v8 .prog i{background:var(--ivory)}
+.v8 .launch{background:rgba(255,255,255,.1);color:var(--ivory);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.2)}
+.v8 .lav{background:var(--ivory);color:#111}
+
+/* ================================================================
+   09 — MONOLITE: colonna dei passaggi a sinistra, struttura chiara
+   ================================================================ */
+.v9 .panel{border-radius:10px;background:#090909}
+.v9 .mid{display:flex;flex:1;min-height:0}
+.v9 .rail{display:flex;flex-direction:column;gap:22px;padding:24px 0 0 18px;width:112px;flex:none;border-right:1px solid rgba(243,238,230,.08)}
+.v9 .rail span{font-size:9.5px;letter-spacing:1.3px;text-transform:uppercase;color:rgba(243,238,230,.35);display:flex;align-items:center;gap:8px}
+.v9 .rail span:before{content:"";flex:none;width:6px;height:6px;border-radius:50%;border:1px solid currentColor}
+.v9 .rail .done{color:var(--ivory-2)}.v9 .rail .done:before{background:var(--ivory-2)}
+.v9 .rail .now{color:var(--gold)}.v9 .rail .now:before{background:var(--gold);border-color:var(--gold)}
+.v9 .step{display:none}
+.v9 .q{font-size:27px}
+.v9 .opt{border-radius:8px;padding:13px 14px;font-size:13.5px}
+.v9 .opt .d{display:block;font-size:11px;color:var(--ivory-2);display:none}
+.v9 .launch{border-radius:8px}
+.v9 .lav{border-radius:6px}
+
+/* ================================================================
+   10 — AVORIO SU NERO: cornice nera, schede avorio molto leggibili
+   ================================================================ */
+.v10 .panel{background:#0b0b0b}
+.v10 .opt{background:var(--ivory);color:#111;border-color:var(--ivory);border-radius:14px;padding:13px 16px}
+.v10 .opt .d{display:block;font-size:11px;color:rgba(17,17,17,.55)}
+.v10 .opt .t{font-weight:500}
+.v10 .opt.sel{box-shadow:0 0 0 2px #0b0b0b inset,0 0 0 3px var(--gold) inset;background:#FBF8F3}
+.v10 .opt.sel:after{width:18px;height:18px;background:var(--gold);content:"✓";color:#111;font-size:11px;display:grid;place-items:center;font-weight:600}
+.v10 .opt .t:after{content:"";display:block}
+</style>
+</head>
+<body>
+<div class="board-hd">
+  <h1>Dieci proposte per la tua <em>guida al preventivo</em></h1>
+  <p>Ogni proposta mostra lo stesso momento: domanda 6 di 14, una risposta scelta, il pulsante di apertura sotto la chat.
+  Dimmi il numero che preferisci, anche mescolando dettagli di più proposte.</p>
+</div>
+<div class="grid" id="grid"></div>
+
+<script>
+const VARIANTS = [
+  ["Noir Atelier", "Nero pieno, titoli serif avorio, risposte a pillola con un filo d'oro. La più vicina al tuo sito."],
+  ["Orbita", "Griglia prospettica come nel tuo screenshot, pannello di vetro, barra in basso con avatar e freccia."],
+  ["Polvere di stelle", "Sfera di particelle sullo sfondo, tutto centrato, risposte come righe di un menu raffinato."],
+  ["Galleria", "Linguaggio Web Duo: contatore grande, maiuscoletto spaziato, risposte come schede numerate."],
+  ["Riflettore", "Fascio di luce e grana fotografica, testo maiuscolo sottile, molto cinematografica."],
+  ["Editoriale", "Titolo corsivo da rivista, risposte come indice numerato con freccia. Calma e letteraria."],
+  ["Concierge", "Una vera conversazione: nuvolette, la tua risposta precedente in oro, scelte a destra."],
+  ["Vetro fumé", "Pannello satinato su luci calde sfocate, risposte con una breve descrizione."],
+  ["Monolite", "Colonna dei passaggi a sinistra (Profilo, Progetto, Stile, Contatti): si sa sempre dove si è."],
+  ["Avorio su nero", "Cornice nera, risposte su schede avorio: massima leggibilità, contrasto netto."]
+];
+const OPTS = [
+  ["Pulita e minimal", "Spazio e ordine"],
+  ["Elegante e premium", "Dettagli curati"],
+  ["Dinamica, animata", "Movimento e sorpresa"],
+  ["Essenziale e concreta", "Dritta al risultato"]
+];
+const grid = document.getElementById("grid");
+VARIANTS.forEach(([name, desc], i) => {
+  const n = i + 1, pad = String(n).padStart(2, "0");
+  const opts = OPTS.map(([t, d], j) =>
+    `<li class="opt${j === 1 ? " sel" : ""}"><span class="n">0${j + 1}</span><span class="t">${t}</span><span class="d">${d}</span><span class="arr">→</span></li>`).join("");
+  const q = `<p class="ok">Ottima scelta.</p><h3 class="q">Che atmosfera vuoi trasmettere?</h3><p class="hint">Scegli quella che ti somiglia di più.</p>`;
+  grid.insertAdjacentHTML("beforeend", `
+  <div class="card v${n}">
+    <div class="stage">
+      ${[2,3,5].includes(n) ? "<canvas></canvas>" : ""}
+      <div class="panel">
+        <header class="hd"><div class="av">S</div><div class="who"><b>Studio</b><span>Consulente di progetto</span></div>
+          <div class="lang"><i>IT</i> · EN</div><div class="x">×</div></header>
+        <div class="big">06<small>/ 14 · STILE</small></div>
+        <div class="prog"><i></i></div><div class="step">Domanda 6 di 14 · Stile</div>
+        <div class="mid">
+          <div class="rail"><span class="done">Profilo</span><span class="done">Progetto</span><span class="now">Stile</span><span>Contatti</span></div>
+          <div class="body">
+            <div class="prev">Servizi, su contatto</div>
+            ${n === 7 ? `<div class="bub">${q}</div>` : q}
+            <ul class="opts">${opts}</ul>
+          </div>
+        </div>
+        <footer class="ft"><span class="back">← Indietro</span><span class="time">circa 3 minuti</span></footer>
+        <div class="inputbar"><div class="av" style="width:30px;height:30px;font-size:16px">S</div><span>Scegli una risposta o scrivi qui…</span><b>↑</b></div>
+      </div>
+      <div class="launch"><span class="lav">S</span>Richiedi un preventivo</div>
+    </div>
+    <div class="cap"><b>${pad}</b><div><strong>${name}</strong><span>${desc}</span></div></div>
+  </div>`);
+});
+// .mid wraps rail+body in every variant; only v9 shows the rail
+document.querySelectorAll(".mid").forEach(m => { m.style.display = "flex"; m.style.flex = "1"; m.style.minHeight = "0"; });
+
+/* ---- Sfondi disegnati ---- */
+function sized(c){ const r = c.getBoundingClientRect(), d = 2; c.width = r.width*d; c.height = r.height*d; const x = c.getContext("2d"); x.scale(d,d); return [x, r.width, r.height]; }
+// 02 Orbita: imbuto prospettico
+(() => { const [x,w,h] = sized(document.querySelector(".v2 canvas")); x.strokeStyle="rgba(255,255,255,.2)"; x.lineWidth=.8;
+  const cx=w/2, cy=h*.62;
+  for(let k=1;k<=11;k++){ const rx=k*k*3.4+14, ry=rx*.42; x.beginPath(); x.ellipse(cx,cy-k*k*.9+60,rx,ry,0,0,Math.PI*2); x.stroke(); }
+  for(let a=0;a<24;a++){ const t=a/24*Math.PI*2; x.beginPath(); x.moveTo(cx+Math.cos(t)*14,cy+60+Math.sin(t)*6); x.lineTo(cx+Math.cos(t)*420,cy-48+Math.sin(t)*176); x.stroke(); }
+  const g=x.createRadialGradient(cx+70,cy+40,0,cx+70,cy+40,8); g.addColorStop(0,"rgba(255,255,255,.9)"); g.addColorStop(1,"transparent"); x.fillStyle=g; x.fillRect(cx+60,cy+30,20,20);
+})();
+// 03 Polvere di stelle: sfera di particelle
+(() => { const [x,w,h] = sized(document.querySelector(".v3 canvas")); const cx=w/2, cy=h*.42, R=170;
+  for(let i=0;i<9000;i++){ const u=Math.random(), r=R*Math.pow(u,.28), t=Math.random()*Math.PI*2;
+    const px=cx+r*Math.cos(t), py=cy+r*Math.sin(t); x.fillStyle=`rgba(243,238,230,${(.08+.35*(r/R))*Math.random()})`; x.fillRect(px,py,1.1,1.1); }
+})();
+// 05 Riflettore: fascio di luce + grana
+(() => { const [x,w,h] = sized(document.querySelector(".v5 canvas"));
+  const g=x.createLinearGradient(w,0,w*.2,h); g.addColorStop(0,"rgba(255,255,255,.38)"); g.addColorStop(.55,"rgba(255,255,255,.05)"); g.addColorStop(1,"transparent");
+  x.fillStyle=g; x.beginPath(); x.moveTo(w*.95,0); x.lineTo(w,0); x.lineTo(w*.45,h); x.lineTo(-w*.1,h); x.closePath(); x.fill();
+  for(let i=0;i<22000;i++){ x.fillStyle=`rgba(255,255,255,${Math.random()*.09})`; x.fillRect(Math.random()*w,Math.random()*h,1,1); }
+})();
+</script>
+</body>
+</html>

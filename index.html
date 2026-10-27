@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pagina di prova — Chatbot preventivi</title>
+  <meta name="robots" content="noindex">
+  <style>
+    /* Questa pagina imita un sito nero solo per provare il widget.
+       Nel tuo sito vero serve SOLO il tag <script> in fondo. */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #000; color: #F3EEE6; font-family: "Inter", system-ui, sans-serif; min-height: 100vh; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 28px 40px; font-size: 12px; letter-spacing: 2.4px; text-transform: uppercase; }
+    nav b { font-weight: 400; font-size: 13px; }
+    nav span { display: flex; gap: 32px; color: rgba(243,238,230,.7); }
+    main { min-height: calc(100vh - 90px); display: flex; flex-direction: column; justify-content: center; padding: 0 40px 80px; max-width: 900px; }
+    .occhiello { font-size: 12px; letter-spacing: 2.4px; text-transform: uppercase; color: rgba(243,238,230,.65); margin-bottom: 26px; }
+    h1 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 400; font-size: clamp(48px, 8vw, 96px); line-height: 1; letter-spacing: -1px; }
+    p.sotto { margin-top: 26px; max-width: 460px; color: rgba(243,238,230,.7); line-height: 1.6; }
+    .cta { margin-top: 40px; display: inline-flex; gap: 12px; align-items: center; color: #F3EEE6; text-decoration: none; font-size: 12px; letter-spacing: 2.4px; text-transform: uppercase; border: 1px solid rgba(243,238,230,.45); padding: 16px 26px; border-radius: 999px; background: none; cursor: pointer; width: fit-content; }
+    .cta:hover { border-color: #CDB07A; }
+    @media (max-width: 640px) { nav { padding: 20px; } nav span { display: none; } main { padding: 0 20px 80px; } }
+  </style>
+</head>
+<body>
+  <nav><b>Il tuo Studio</b><span>Work · Services · About · Contact</span></nav>
+  <main>
+    <p class="occhiello">Pagina di prova del widget</p>
+    <h1>Beyond<br>the screen.</h1>
+    <p class="sotto">Il pulsante in basso a destra apre la chat. Anche questo pulsante la apre,
+      perché ha l'attributo <code>data-preventivo</code>: puoi usarlo su qualsiasi bottone del tuo sito.</p>
+    <button class="cta" type="button" data-preventivo>Richiedi un preventivo →</button>
+  </main>
+
+  <!-- ====== IL CHATBOT: questo è l'unico tag da copiare nel tuo sito ====== -->
+  <script src="widget/preventivo.js" defer></script>
+</body>
+</html>

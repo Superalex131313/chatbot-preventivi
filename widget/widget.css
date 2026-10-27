@@ -1,0 +1,350 @@
+/* =====================================================================
+   STILE DEL WIDGET — design "Polvere di stelle".
+   Vive dentro una bolla isolata (Shadow DOM): il tuo sito non può
+   rovinarlo e lui non può rovinare il tuo sito.
+
+   Per cambiare i colori modifica solo le variabili qui sotto.
+   ===================================================================== */
+
+:host { all: initial; }
+
+.pv {
+  /* --- Colori --- */
+  --pv-sfondo: #1b1a1f;                      /* fondo del pannello */
+  --pv-sfondo-alto: #232228;                 /* superfici in rilievo */
+  --pv-avorio: #F3EEE6;                      /* testo principale */
+  --pv-avorio-2: rgba(243, 238, 230, .68);   /* testo secondario */
+  --pv-avorio-3: rgba(243, 238, 230, .16);   /* bordi tenui */
+  --pv-linea: rgba(243, 238, 230, .11);      /* linee sottili */
+  --pv-oro: #CDB07A;                         /* dettagli oro tenue */
+  --pv-errore: #EBA99D;
+  /* --- Caratteri --- */
+  --pv-serif: "Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif;
+  --pv-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* --- Movimento --- */
+  --pv-curva: cubic-bezier(.2, .7, .2, 1);
+
+  font-family: var(--pv-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--pv-avorio);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.pv[lang="ar"] {
+  --pv-serif: "Noto Naskh Arabic", "Geeza Pro", serif;
+  --pv-sans: "Noto Sans Arabic", "Geeza Pro", Tahoma, sans-serif;
+}
+
+.pv *, .pv *::before, .pv *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.pv [hidden] { display: none !important; }
+.pv button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.pv a { color: inherit; }
+.pv :focus-visible { outline: 2px solid var(--pv-oro); outline-offset: 3px; border-radius: 6px; }
+.pv [tabindex="-1"]:focus, .pv [tabindex="-1"]:focus-visible { outline: none; }
+.pv input:not([type="checkbox"]):focus-visible, .pv textarea:focus-visible { outline: none; }  /* i campi mostrano il fuoco con la linea oro */  /* titoli che ricevono il fuoco solo per i lettori di schermo */
+
+/* Testo visibile solo ai lettori di schermo */
+.pv-sr {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ============================ AVATAR ============================ */
+.pv-av {
+  width: 32px; height: 32px; border-radius: 50%; flex: none;
+  display: grid; place-items: center; overflow: hidden;
+  background: var(--pv-avorio); color: var(--pv-sfondo);
+  font-family: var(--pv-serif); font-size: 18px; line-height: 1;
+}
+.pv-av img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ===================== PULSANTE DI APERTURA ===================== */
+.pv-lancia {
+  position: fixed; z-index: 2147483000; bottom: 24px; inset-inline-end: 24px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 20px 7px 7px; border-radius: 999px;
+  background: rgba(27, 26, 31, .88) !important;
+  border: 1px solid rgba(243, 238, 230, .28) !important;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .38);
+  font-size: 14px; font-weight: 500; letter-spacing: .2px;
+  transition: border-color .3s, transform .3s var(--pv-curva), opacity .3s;
+}
+.pv-lancia:hover { border-color: var(--pv-oro) !important; transform: translateY(-2px); }
+.pv--sinistra .pv-lancia, .pv--sinistra .pv-invito { inset-inline-end: auto; inset-inline-start: 24px; }
+.pv--aperta .pv-lancia { opacity: 0; pointer-events: none; transform: translateY(8px); }
+
+/* ======================== NUVOLETTA INVITO ======================== */
+.pv-invito {
+  position: fixed; z-index: 2147483000; bottom: 86px; inset-inline-end: 24px;
+  display: flex; align-items: flex-start; gap: 4px; max-width: 280px;
+  padding: 14px 10px 14px 18px; border-radius: 16px;
+  background: var(--pv-sfondo); border: 1px solid var(--pv-avorio-3);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .35);
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .5s var(--pv-curva), transform .5s var(--pv-curva);
+}
+.pv-invito.pv-visibile { opacity: 1; transform: none; }
+.pv-invito-testo { text-align: start; font-size: 13.5px; line-height: 1.45; color: var(--pv-avorio); }
+.pv-invito-x { width: 26px; height: 26px; border-radius: 50%; color: var(--pv-avorio-2); font-size: 16px; flex: none; }
+.pv-invito-x:hover { color: var(--pv-avorio); }
+
+/* ============================ PANNELLO ============================ */
+.pv-pannello {
+  position: fixed; z-index: 2147483001; bottom: 24px; inset-inline-end: 24px;
+  width: 440px; height: min(720px, calc(100vh - 48px));
+  display: flex; flex-direction: column; overflow: hidden;
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(243, 238, 230, .045), transparent 60%),
+    var(--pv-sfondo);
+  border: 1px solid rgba(243, 238, 230, .09);
+  border-radius: 24px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, .55), 0 2px 8px rgba(0, 0, 0, .25);
+  opacity: 0; transform: translateY(14px) scale(.985); transform-origin: bottom right;
+  transition: opacity .32s var(--pv-curva), transform .32s var(--pv-curva);
+}
+.pv--sinistra .pv-pannello { inset-inline-end: auto; inset-inline-start: 24px; transform-origin: bottom left; }
+.pv-pannello.pv-visibile { opacity: 1; transform: none; }
+@media (min-width: 1440px) { .pv-pannello { width: 460px; height: min(760px, calc(100vh - 56px)); } }
+
+/* Sfondo animato: sfera e scritte ad arco */
+.pv-sfera, .pv-archi { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.pv-archi { opacity: 0; transition: opacity .8s var(--pv-curva); }
+.pv-archi.pv-visibile { opacity: 1; }
+.pv-archi text { fill: var(--pv-avorio-2); font-family: var(--pv-sans); font-size: 12px; letter-spacing: 2.4px; }
+
+/* ============================ TESTATA ============================ */
+.pv-testa {
+  position: relative; z-index: 4;   /* sopra il corpo, così il menu lingue resta cliccabile */
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  padding: 16px 16px 12px;
+}
+.pv-marchio {
+  display: flex; align-items: center; gap: 10px; justify-self: center;
+  font-size: 11px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--pv-avorio-2);
+}
+.pv-av--testa {
+  width: 30px; height: 30px; font-size: 17px;
+  background: transparent; color: var(--pv-avorio); border: 1px solid rgba(243, 238, 230, .4);
+}
+.pv-chiudi {
+  justify-self: end; width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--pv-avorio-3) !important; color: var(--pv-avorio-2);
+  font-size: 17px; line-height: 1; display: grid; place-items: center;
+  transition: color .2s, border-color .2s;
+}
+.pv-chiudi:hover { color: var(--pv-avorio); border-color: rgba(243, 238, 230, .4) !important; }
+
+.pv-lingua { position: relative; justify-self: start; }
+.pv-lingua-btn {
+  height: 34px; padding: 0 12px; border-radius: 999px;
+  font-size: 11px; letter-spacing: 1.6px; color: var(--pv-avorio-2);
+  border: 1px solid transparent !important; transition: color .2s, border-color .2s;
+}
+.pv-lingua-btn:hover, .pv-lingua-btn[aria-expanded="true"] { color: var(--pv-avorio); border-color: var(--pv-avorio-3) !important; }
+.pv-lingua-menu {
+  position: absolute; top: 40px; inset-inline-start: 0; z-index: 5; list-style: none;
+  min-width: 150px; padding: 6px; border-radius: 14px;
+  background: var(--pv-sfondo-alto); border: 1px solid var(--pv-avorio-3);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .45);
+}
+.pv-lingua-menu button {
+  width: 100%; text-align: start; padding: 9px 12px; border-radius: 9px; font-size: 13.5px; color: var(--pv-avorio-2);
+}
+.pv-lingua-menu button:hover, .pv-lingua-menu button:focus-visible { background: rgba(243, 238, 230, .06); color: var(--pv-avorio); }
+.pv-lingua-menu button[aria-current="true"] { color: var(--pv-oro); }
+
+/* ====================== AVANZAMENTO E PASSO ====================== */
+.pv-avanzamento { position: relative; z-index: 2; height: 1px; margin: 4px 64px 0; background: var(--pv-avorio-3); }
+.pv-avanzamento i { display: block; height: 100%; width: 0; background: var(--pv-oro); transition: width .6s var(--pv-curva); }
+.pv-passo {
+  position: relative; z-index: 2; min-height: 30px; padding-top: 12px; text-align: center;
+  font-size: 10.5px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--pv-avorio-2);
+}
+.pv[lang="ar"] .pv-passo, .pv[lang="ar"] .pv-marchio { letter-spacing: 0; }
+
+/* ============================== CORPO ============================== */
+.pv-corpo {
+  position: relative; z-index: 2; flex: 1; min-height: 0;
+  overflow-y: auto; overscroll-behavior: contain;
+  padding: 26px 30px 18px;
+  scrollbar-width: thin; scrollbar-color: var(--pv-avorio-3) transparent;
+}
+.pv--centrato .pv-corpo { display: flex; }
+
+.pv-scena {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px;
+  animation: pv-entra .45s var(--pv-curva) both;
+}
+.pv-scena--centro { margin: auto; justify-content: center; gap: 16px; max-width: 320px; }
+.pv-statico .pv-scena { animation: none; }
+@keyframes pv-entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.pv-ok { font-family: var(--pv-serif); font-style: italic; font-size: 18px; color: var(--pv-oro); }
+.pv[lang="ar"] .pv-ok { font-style: normal; font-size: 16px; }
+.pv-q {
+  font-family: var(--pv-serif); font-weight: 400; font-size: 32px; line-height: 1.12;
+  letter-spacing: -.2px; color: var(--pv-avorio); outline: none;
+}
+.pv-q label { cursor: text; }
+.pv-q--grande { font-size: 46px; }
+.pv-q--medio { font-size: 28px; }
+.pv[lang="ar"] .pv-q { line-height: 1.45; font-size: 27px; }
+.pv[lang="ar"] .pv-q--grande { font-size: 36px; }
+.pv-testo { font-size: 15px; line-height: 1.6; color: var(--pv-avorio-2); }
+.pv-hint { font-size: 13px; line-height: 1.55; color: var(--pv-avorio-2); max-width: 330px; }
+.pv-nota { font-size: 11px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--pv-avorio-2); }
+.pv[lang="ar"] .pv-nota { letter-spacing: 0; font-size: 12px; }
+
+/* Puntini "sta scrivendo" */
+.pv-scrive { display: flex; gap: 6px; margin: 64px auto 0; justify-content: center; }
+.pv-scrive i { width: 5px; height: 5px; border-radius: 50%; background: var(--pv-avorio); opacity: .25; animation: pv-punto 1s infinite; }
+.pv-scrive i:nth-child(3) { animation-delay: .15s; }
+.pv-scrive i:nth-child(4) { animation-delay: .3s; }
+@keyframes pv-punto { 0%, 100% { opacity: .2; transform: none; } 40% { opacity: .9; transform: translateY(-3px); } }
+
+/* ============================ RISPOSTE ============================ */
+.pv-opzioni { width: 100%; margin-top: 10px; display: flex; flex-direction: column; }
+.pv-opz {
+  width: 100%; min-height: 52px; padding: 13px 14px;
+  border-top: 1px solid var(--pv-linea) !important;
+  font-size: 15px; letter-spacing: .1px; color: var(--pv-avorio);
+  transition: background .25s, color .25s;
+}
+.pv-opz:last-child { border-bottom: 1px solid var(--pv-linea) !important; }
+.pv-opz:hover { background: rgba(243, 238, 230, .045); }
+.pv-opz:focus-visible { outline-offset: -2px; }
+.pv-opz span::before, .pv-opz span::after {
+  content: "—"; display: inline-block; width: 0; opacity: 0; overflow: hidden; vertical-align: top;
+  transition: width .3s var(--pv-curva), opacity .3s;
+}
+.pv-opz[aria-pressed="true"] { color: var(--pv-oro); }
+.pv-opz[aria-pressed="true"] span::before { width: 1.6em; opacity: 1; text-align: start; }
+.pv-opz[aria-pressed="true"] span::after { width: 1.6em; opacity: 1; text-align: end; }
+.pv-opz[aria-disabled="true"] { opacity: .35; cursor: not-allowed; }
+.pv-opz[aria-disabled="true"]:hover { background: none; }
+
+/* ============================ PULSANTI ============================ */
+.pv-azioni { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 18px; width: 100%; }
+.pv-btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 48px;
+  padding: 13px 30px; border-radius: 999px; text-decoration: none;
+  background: var(--pv-avorio) !important; color: #141317 !important;
+  font-size: 14px; font-weight: 500; letter-spacing: .3px;
+  transition: background .2s, transform .2s var(--pv-curva), opacity .2s;
+}
+.pv-btn:hover { background: #fff !important; transform: translateY(-1px); }
+.pv-btn:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+.pv-btn--sec { background: transparent !important; color: var(--pv-avorio) !important; border: 1px solid rgba(243, 238, 230, .35) !important; }
+.pv-btn--sec:hover { background: rgba(243, 238, 230, .06) !important; }
+.pv-link {
+  font-size: 13px; color: var(--pv-avorio-2); text-decoration: underline;
+  text-underline-offset: 4px; text-decoration-color: var(--pv-avorio-3); padding: 6px 4px;
+}
+.pv-link:hover { color: var(--pv-avorio); }
+.pv-link--piccolo { font-size: 12px; padding: 2px 0; flex: none; }
+
+/* ============================== CAMPI ============================== */
+.pv-campo-grande, .pv-campo, .pv-modulo input[type="text"], .pv-modulo input[type="email"],
+.pv-modulo input[type="tel"], .pv-modulo textarea {
+  width: 100%; font: inherit; color: var(--pv-avorio); background: transparent;
+  border: 0; border-bottom: 1px solid rgba(243, 238, 230, .28); border-radius: 0;
+  padding: 10px 2px; caret-color: var(--pv-oro); outline: none;
+  transition: border-color .25s;
+}
+.pv-campo-grande {
+  margin-top: 18px; text-align: center; font-family: var(--pv-serif); font-size: 28px;
+}
+.pv-campo { text-align: center; font-size: 16px; margin-top: 4px; }
+.pv-campo-grande::placeholder, .pv-campo::placeholder, .pv-modulo ::placeholder { color: rgba(243, 238, 230, .45); }
+.pv-campo-grande:focus, .pv-campo:focus, .pv-modulo input:focus, .pv-modulo textarea:focus { border-color: var(--pv-oro); }
+.pv [aria-invalid="true"] { border-color: var(--pv-errore) !important; }
+.pv-errore { min-height: 1em; font-size: 12.5px; color: var(--pv-errore); }
+.pv-errore:empty { min-height: 0; }
+.pv-errore--blocco { padding: 12px 14px; border: 1px solid rgba(235, 169, 157, .35); border-radius: 12px; }
+.pv-altro { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 8px; animation: pv-entra .35s var(--pv-curva) both; }
+
+/* Modulo contatti: allineato al testo, più facile da compilare */
+.pv-modulo { gap: 14px; }
+.pv-modulo .pv-q, .pv-modulo .pv-hint { align-self: center; }
+.pv-f { width: 100%; text-align: start; display: flex; flex-direction: column; gap: 2px; }
+.pv-f label { font-size: 11px; letter-spacing: 1.3px; text-transform: uppercase; color: var(--pv-avorio-2); }
+.pv[lang="ar"] .pv-f label { letter-spacing: 0; font-size: 12.5px; }
+.pv-f label em { font-style: normal; text-transform: none; letter-spacing: 0; opacity: .8; }
+.pv-modulo input, .pv-modulo textarea { font-size: 16px; }   /* 16px: evita lo zoom automatico su iPhone */
+.pv-modulo textarea {
+  resize: vertical; min-height: 76px; margin-top: 6px; padding: 10px 12px;
+  border: 1px solid rgba(243, 238, 230, .2); border-radius: 12px; line-height: 1.5;
+}
+.pv-consenso { width: 100%; display: flex; gap: 12px; align-items: flex-start; text-align: start; margin-top: 6px; }
+.pv-consenso input {
+  appearance: none; -webkit-appearance: none; flex: none; width: 20px; height: 20px; margin-top: 1px;
+  border: 1px solid rgba(243, 238, 230, .45); border-radius: 6px; cursor: pointer; display: grid; place-items: center;
+  transition: background .2s, border-color .2s;
+}
+.pv-consenso input:checked { background: var(--pv-oro); border-color: var(--pv-oro); }
+.pv-consenso input:checked::after { content: "✓"; color: #141317; font-size: 13px; font-weight: 600; }
+.pv-consenso label { font-size: 12.5px; line-height: 1.55; color: var(--pv-avorio-2); cursor: pointer; }
+.pv-consenso a { color: var(--pv-avorio); text-underline-offset: 3px; }
+.pv-trappola { position: absolute; inset-inline-start: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ============================ RIEPILOGO ============================ */
+.pv-riepilogo { gap: 10px; }
+.pv-blocco { width: 100%; text-align: start; margin-top: 14px; }
+.pv-blocco h3 {
+  font-family: var(--pv-sans); font-weight: 500; font-size: 10.5px; letter-spacing: 1.8px;
+  text-transform: uppercase; color: var(--pv-oro); padding-bottom: 8px; border-bottom: 1px solid var(--pv-linea);
+}
+.pv[lang="ar"] .pv-blocco h3 { letter-spacing: 0; font-size: 12px; }
+.pv-riga { padding: 11px 0; border-bottom: 1px solid var(--pv-linea); }
+.pv-riga dt { font-size: 12px; color: var(--pv-avorio-2); margin-bottom: 3px; }
+.pv-riga dd { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; font-size: 14.5px; }
+.pv-riga dd em { color: var(--pv-avorio-2); }
+
+/* ============================ RINGRAZIAMENTO ============================ */
+.pv-grazie { max-width: 340px; }
+.pv-pacchetto {
+  width: 100%; margin: 8px 0 4px; padding: 20px 22px; border-radius: 18px;
+  background: rgba(27, 26, 31, .72); border: 1px solid rgba(205, 176, 122, .35);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.pv-occhiello { font-size: 10.5px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--pv-oro); }
+.pv[lang="ar"] .pv-occhiello { letter-spacing: 0; font-size: 12px; }
+.pv-pacchetto-nome { font-family: var(--pv-serif); font-size: 34px; line-height: 1.2; margin: 4px 0 6px; }
+.pv-pacchetto-testo { font-size: 13.5px; line-height: 1.55; color: var(--pv-avorio-2); }
+.pv-prova { font-size: 11.5px; color: var(--pv-oro); opacity: .85; margin-top: 4px; }
+
+/* ============================== PIEDE ============================== */
+.pv-piede {
+  position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 22px 18px; min-height: 52px; font-size: 12.5px; color: var(--pv-avorio-2);
+}
+.pv-indietro { display: inline-flex; gap: 6px; align-items: center; padding: 6px 4px; color: var(--pv-avorio-2); }
+.pv-indietro:hover { color: var(--pv-avorio); }
+.pv-tempo { margin-inline-start: auto; }
+.pv[dir="rtl"] .pv-freccia { display: inline-block; transform: scaleX(-1); }
+
+/* ============================== MOBILE ============================== */
+@media (max-width: 640px) {
+  .pv-lancia { bottom: 16px; inset-inline-end: 16px; padding: 7px; }
+  .pv--sinistra .pv-lancia { inset-inline-start: 16px; }
+  .pv-lancia .pv-av { width: 44px; height: 44px; font-size: 22px; }
+  .pv-lancia-testo { display: none; }
+  .pv-invito { bottom: 84px; inset-inline-end: 16px; max-width: calc(100vw - 32px); }
+  .pv-pannello, .pv--sinistra .pv-pannello {
+    inset: 0; width: 100%; height: 100%; height: 100dvh; border-radius: 0; border: 0;
+    transform: translateY(24px); transform-origin: bottom center;
+  }
+  .pv-testa { padding-top: max(14px, env(safe-area-inset-top)); }
+  .pv-corpo { padding: 22px 22px 14px; }
+  .pv-piede { padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+  .pv-q { font-size: 30px; }
+  .pv-q--grande { font-size: 42px; }
+  .pv-avanzamento { margin: 4px 48px 0; }
+}
+
+/* ===================== MENO ANIMAZIONI (accessibilità) ===================== */
+@media (prefers-reduced-motion: reduce) {
+  .pv *, .pv *::before, .pv *::after { animation: none !important; transition: none !important; }
+}
