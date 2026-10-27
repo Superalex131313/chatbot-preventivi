@@ -12,7 +12,7 @@
      6. Azioni (clic, risposte, avanti, indietro)
      7. Analisi, report e invio
      8. Apertura, chiusura, tastiera, invito
-     9. Sfera di particelle
+     9. Anello d'oro animato
     10. Avvio
    ===================================================================== */
 
@@ -205,7 +205,7 @@
         </div>
 
         <div class="pv-pannello" role="dialog" aria-modal="true" aria-labelledby="pv-marchio" hidden>
-          <canvas class="pv-sfera" aria-hidden="true"></canvas>
+          <canvas class="pv-visual" aria-hidden="true"></canvas>
           <svg class="pv-archi" aria-hidden="true">
             <defs><path id="pv-cerchio" d=""></path></defs>
             <text><textPath href="#pv-cerchio" startOffset="4%" class="pv-arco1"></textPath></text>
@@ -237,7 +237,7 @@
     Object.assign(el, {
       pv: $(".pv"), lancia: $(".pv-lancia"), lanciaTesto: $(".pv-lancia-testo"),
       invito: $(".pv-invito"), invitoTesto: $(".pv-invito-testo"), invitoX: $(".pv-invito-x"),
-      pannello: $(".pv-pannello"), canvas: $(".pv-sfera"), archi: $(".pv-archi"), cerchio: $("#pv-cerchio"),
+      pannello: $(".pv-pannello"), canvas: $(".pv-visual"), archi: $(".pv-archi"), cerchio: $("#pv-cerchio"),
       arco1: $(".pv-arco1"), arco2: $(".pv-arco2"),
       linguaBtn: $(".pv-lingua-btn"), linguaMenu: $(".pv-lingua-menu"), chiudi: $(".pv-chiudi"),
       barra: $(".pv-avanzamento"), barraI: $(".pv-avanzamento i"), passo: $(".pv-passo"),
@@ -246,9 +246,9 @@
 
     // Mostra il widget solo quando lo stile è caricato (niente "lampi" senza stile)
     const foglio = $("link");
-    const mostra = () => { el.pv.style.display = ""; sfera.misura(); };
-    // La sfera si rimisura quando il pannello cambia dimensione (apertura, rotazione, finestra)
-    if (window.ResizeObserver) new ResizeObserver(() => sfera.misura()).observe(el.canvas);
+    const mostra = () => { el.pv.style.display = ""; visual.misura(); };
+    // L'anello si rimisura quando il pannello cambia dimensione (apertura, rotazione, finestra)
+    if (window.ResizeObserver) new ResizeObserver(() => visual.misura()).observe(el.canvas);
     foglio.addEventListener("load", mostra);
     foglio.addEventListener("error", mostra);
 
@@ -335,13 +335,14 @@
     const attesa = Math.min(600, Math.max(0, C.DURATA_SCRITTURA_MS == null ? 550 : C.DURATA_SCRITTURA_MS));
     if (o.scrivendo && attesa && !movimentoRidotto) {
       el.corpo.innerHTML = `<div class="pv-scrive" role="status"><span class="pv-sr">${ui("scrive")}</span><i></i><i></i><i></i></div>`;
-      sfera.modo(S.schermata);
+      visual.modo(S.schermata);
       setTimeout(() => { if (token === temp.token) disegnaSchermata(o); }, attesa);
     } else {
       disegnaSchermata(o);
     }
   }
 
+  let ultimaSchermata = "";
   function disegnaSchermata(o) {
     const opz = o || {};
     // Il riepilogo richiede tutte le risposte: se ne manca una, ci si torna
@@ -369,7 +370,9 @@
     temp.bozza = null;
     el.corpo.scrollTop = sulPosto ? scorrimento : 0;
     el.pannello.classList.toggle("pv--centrato", ["benvenuto", "ripresa", "grazie"].includes(schermata));
-    sfera.modo(schermata);
+    visual.modo(schermata);
+    if (schermata !== ultimaSchermata && ultimaSchermata) visual.impulso();   // onda a ogni nuova schermata
+    ultimaSchermata = schermata;
 
     if (opz.fuoco !== false && aperta) {
       const f = el.corpo.querySelector("[data-fuoco]");
@@ -784,7 +787,7 @@
     });
 
     el.root.addEventListener("keydown", tastiera);
-    window.addEventListener("resize", () => sfera.misura());
+    window.addEventListener("resize", () => visual.misura());
 
     // Qualsiasi elemento del sito con data-preventivo (o link a #preventivo) apre la chat
     document.addEventListener("click", e => {
@@ -964,8 +967,8 @@
       overflowPrecedente = document.documentElement.style.overflow;
       document.documentElement.style.overflow = "hidden";
     }
-    sfera.misura();
-    sfera.avvia();
+    visual.misura();
+    visual.avvia();
     disegna();
     if (senzaAnimazione || movimentoRidotto) el.pannello.classList.add("pv-visibile");
     else requestAnimationFrame(() => requestAnimationFrame(() => el.pannello.classList.add("pv-visibile")));
@@ -987,7 +990,7 @@
       if (aperta) return;
       el.pannello.hidden = true;
       el.pv.classList.remove("pv--aperta");
-      sfera.ferma();
+      visual.ferma();
       el.lancia.focus();
     }, movimentoRidotto ? 0 : 280);
     // Dopo l'invio, la prossima apertura riparte da capo
@@ -1035,39 +1038,55 @@
     el.invito.hidden = true;
   }
 
-  /* ====================== 9. SFERA DI PARTICELLE ====================== */
+  /* ====================== 9. ANELLO D'ORO ANIMATO ====================== */
 
-  // Una sfera di punti che ruota lentamente: grande nell'accoglienza,
-  // tenue sullo sfondo durante le domande. Ferma se la chat è chiusa
-  // o se il visitatore ha chiesto meno animazioni.
-  const sfera = (function () {
-    let ctx, w = 0, h = 0, raf = null, angolo = 0;
-    const punti = [];
+  // Un anello d'oro sottile che si disegna da solo all'apertura. Poi un punto
+  // di luce gli gira intorno e lo illumina al passaggio, l'alone "respira" e a
+  // ogni nuova schermata parte un'onda leggera che si allarga e svanisce.
+  // Grande nell'accoglienza, tenue durante le domande. Si ferma quando la chat
+  // è chiusa; per chi ha chiesto meno animazioni resta disegnato e immobile.
+  const visual = (function () {
+    const ORO = [205, 176, 122], ORO_CHIARO = [244, 226, 182], AVORIO = "243,238,230";
+    const SEGMENTI = 240;            // l'anello è fatto di tanti archi, ognuno con la sua luce
+    const GIRO_MS = 11000;           // un giro completo del punto di luce
+    const DISEGNO_MS = 1700;         // durata del tratto iniziale
+    const ONDA_MS = 1500;            // durata di un'onda
+    const PARTENZA = -Math.PI / 2;   // il tratto parte da mezzogiorno
+    const GIRO = Math.PI * 2;
+
+    let ctx, w = 0, h = 0, raf = null, bagliore = null;
+    let inizio = 0, ultimo = 0, disegnato = 1, angoloLuce = PARTENZA;
+    let modoAttuale = "benvenuto";
+    const onde = [];
     const corrente = { x: 0, y: 0, r: 0, a: 0 };
     const meta = { x: 0, y: 0, r: 0, a: 0 };
-    let modoAttuale = "benvenuto";
 
-    function crea() {
-      const n = suMobile() ? 900 : 1400;
-      const oro = Math.PI * (3 - Math.sqrt(5));     // distribuzione uniforme sulla sfera
-      for (let i = 0; i < n; i++) {
-        const y = 1 - (i / (n - 1)) * 2, raggio = Math.sqrt(1 - y * y), t = oro * i;
-        const j = 0.94 + Math.random() * 0.06;
-        punti.push({ x: Math.cos(t) * raggio * j, y: y * j, z: Math.sin(t) * raggio * j, s: Math.random() < 0.12 ? 1.6 : 1 });
-      }
+    const morbido = t => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const mescola = (c1, c2, t) => c1.map((v, i) => Math.round(v + (c2[i] - v) * t)).join(",");
+
+    // Il punto di luce viene preparato una volta sola (più leggero da disegnare)
+    function preparaBagliore() {
+      const d = 64, s = document.createElement("canvas");
+      s.width = s.height = d * 2;
+      const c = s.getContext("2d"), g = c.createRadialGradient(d, d, 0, d, d, d);
+      g.addColorStop(0, "rgba(255,251,240,1)");
+      g.addColorStop(.1, "rgba(" + ORO_CHIARO.join(",") + ",.9)");
+      g.addColorStop(.38, "rgba(" + ORO.join(",") + ",.2)");
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      c.fillStyle = g; c.fillRect(0, 0, d * 2, d * 2);
+      bagliore = s;
     }
 
     function calcolaMeta(salta) {
       const grande = modoAttuale === "benvenuto" || modoAttuale === "ripresa" || modoAttuale === "grazie";
       meta.x = w / 2;
       meta.y = grande ? h * 0.42 : h * 0.4;
-      meta.r = grande ? Math.min(w * 0.36, h * 0.27) : Math.min(w * 0.44, h * 0.32);
-      meta.a = modoAttuale === "grazie" ? 0.45 : grande ? 1 : 0.4;
+      meta.r = grande ? Math.min(w * 0.34, h * 0.25) : Math.min(w * 0.44, h * 0.31);
+      meta.a = modoAttuale === "grazie" ? 0.55 : grande ? 1 : 0.32;
       if (salta) Object.assign(corrente, meta);
       // Scritte ad arco solo nell'accoglienza (non in arabo: le lettere vanno legate)
-      const archi = modoAttuale === "benvenuto" && S.lingua !== "ar";
-      el.archi.classList.toggle("pv-visibile", archi);
-      const r = meta.r + 22;
+      el.archi.classList.toggle("pv-visibile", modoAttuale === "benvenuto" && S.lingua !== "ar");
+      const r = meta.r * 1.12 + 16;
       el.archi.setAttribute("viewBox", `0 0 ${w} ${h}`);
       el.cerchio.setAttribute("d", `M ${meta.x - r} ${meta.y} a ${r} ${r} 0 1 1 ${2 * r} 0 a ${r} ${r} 0 1 1 ${-2 * r} 0`);
     }
@@ -1080,43 +1099,95 @@
       el.canvas.width = w * dpr; el.canvas.height = h * dpr;
       ctx = el.canvas.getContext("2d");
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (!bagliore) preparaBagliore();
       calcolaMeta(true);
-      disegnaFotogramma();
+      disegnaFotogramma(performance.now());
     }
 
-    function disegnaFotogramma() {
+    function disegnaFotogramma(ora) {
       if (!ctx) return;
-      ["x", "y", "r", "a"].forEach(k => { corrente[k] += (meta[k] - corrente[k]) * 0.07; });
+      const dt = ultimo ? Math.min(64, ora - ultimo) : 16.7;
+      ultimo = ora;
+
+      // Spostamenti morbidi tra accoglienza e domande (uguali a ogni frequenza dello schermo)
+      const k = 1 - Math.pow(0.92, dt / 16.7);
+      ["x", "y", "r", "a"].forEach(p => { corrente[p] += (meta[p] - corrente[p]) * k; });
+
+      // Tratto iniziale, poi la luce gira da sola
+      if (disegnato < 1) disegnato = Math.min(1, (ora - inizio) / DISEGNO_MS);
+      const tratto = morbido(disegnato);
+      if (disegnato < 1) angoloLuce = PARTENZA + tratto * GIRO;
+      else if (!movimentoRidotto) angoloLuce += dt / GIRO_MS * GIRO;
+
+      const cx = corrente.x, cy = corrente.y, R = corrente.r, A = corrente.a;
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = "#F3EEE6";
-      const cos = Math.cos(angolo), sin = Math.sin(angolo), ct = Math.cos(0.38), st = Math.sin(0.38);
-      for (const p of punti) {
-        const x = p.x * cos - p.z * sin;
-        const z = p.x * sin + p.z * cos;
-        const y = p.y * ct - z * st;
-        const z2 = p.y * st + z * ct;
-        const profondita = (z2 + 1) / 2;
-        ctx.globalAlpha = (0.08 + 0.5 * profondita) * corrente.a;
-        ctx.fillRect(corrente.x + x * corrente.r, corrente.y + y * corrente.r, p.s, p.s);
+      if (A < 0.01 || R < 1) return;
+      const respiro = 0.5 + 0.5 * Math.sin(ora / 2600);
+
+      // Alone che respira
+      const alone = ctx.createRadialGradient(cx, cy, R * 0.72, cx, cy, R * 1.5);
+      alone.addColorStop(0, "rgba(0,0,0,0)");
+      alone.addColorStop(0.5, "rgba(" + ORO.join(",") + "," + ((0.05 + 0.035 * respiro) * A * tratto) + ")");
+      alone.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = alone;
+      ctx.fillRect(cx - R * 1.6, cy - R * 1.6, R * 3.2, R * 3.2);
+
+      // Anello esterno sottilissimo
+      ctx.lineWidth = 0.7;
+      ctx.strokeStyle = "rgba(" + AVORIO + "," + ((0.08 + 0.04 * respiro) * A * tratto) + ")";
+      ctx.beginPath(); ctx.arc(cx, cy, R * (1.12 + 0.005 * respiro), 0, GIRO); ctx.stroke();
+
+      // Anello d'oro: ogni tratto si accende quando la luce gli passa vicino
+      const fine = tratto * GIRO;
+      ctx.lineWidth = 1.6;
+      for (let i = 0; i < SEGMENTI; i++) {
+        const a0 = i / SEGMENTI * GIRO;
+        if (a0 >= fine) break;
+        const a1 = Math.min(fine, a0 + GIRO / SEGMENTI + 0.004);
+        const dietro = (((angoloLuce - (PARTENZA + a0)) % GIRO) + GIRO) % GIRO;  // 0 = sotto la luce
+        const luce = Math.max(Math.exp(-dietro / 0.95), Math.exp(-(GIRO - dietro) / 0.16));
+        ctx.strokeStyle = "rgba(" + mescola(ORO, ORO_CHIARO, luce) + "," + ((0.3 + 0.7 * luce) * A) + ")";
+        ctx.beginPath(); ctx.arc(cx, cy, R, PARTENZA + a0, PARTENZA + a1); ctx.stroke();
       }
+
+      // Il punto di luce
+      const px = cx + Math.cos(angoloLuce) * R, py = cy + Math.sin(angoloLuce) * R;
+      const dim = (24 + 5 * respiro) * (0.6 + 0.4 * A);
+      ctx.globalAlpha = A;
+      ctx.drawImage(bagliore, px - dim, py - dim, dim * 2, dim * 2);
       ctx.globalAlpha = 1;
+
+      // Onde che si allargano a ogni nuova schermata
+      for (let i = onde.length - 1; i >= 0; i--) {
+        const e = (ora - onde[i]) / ONDA_MS;
+        if (e >= 1) { onde.splice(i, 1); continue; }
+        const f = 1 - Math.pow(1 - e, 3);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "rgba(" + ORO.join(",") + "," + ((1 - e) * 0.5 * Math.max(A, 0.5)) + ")";
+        ctx.beginPath(); ctx.arc(cx, cy, R * (1 + 0.3 * f), 0, GIRO); ctx.stroke();
+      }
     }
 
-    function ciclo() {
-      angolo += 0.0018;
-      disegnaFotogramma();
+    function ciclo(ora) {
+      disegnaFotogramma(ora);
       raf = requestAnimationFrame(ciclo);
     }
 
     return {
       misura,
-      modo(m) { modoAttuale = m; if (w) { calcolaMeta(movimentoRidotto); if (movimentoRidotto) disegnaFotogramma(); } },
+      modo(m) {
+        modoAttuale = m;
+        if (w) { calcolaMeta(movimentoRidotto); if (movimentoRidotto) disegnaFotogramma(performance.now()); }
+      },
+      // A ogni apertura l'anello si ridisegna
       avvia() {
-        if (!punti.length) crea();
-        if (movimentoRidotto) { disegnaFotogramma(); return; }
+        if (!bagliore) preparaBagliore();
+        if (movimentoRidotto) { disegnato = 1; angoloLuce = -0.7; disegnaFotogramma(performance.now()); return; }
+        inizio = performance.now(); disegnato = 0; ultimo = 0;
         if (!raf) raf = requestAnimationFrame(ciclo);
       },
-      ferma() { if (raf) cancelAnimationFrame(raf); raf = null; }
+      ferma() { if (raf) cancelAnimationFrame(raf); raf = null; },
+      impulso() { if (!movimentoRidotto && raf) onde.push(performance.now()); }
     };
   })();
 

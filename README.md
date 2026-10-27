@@ -2,7 +2,7 @@
 
 Un assistente elegante che guida i visitatori del tuo sito in 15 domande e ti manda via email una richiesta di preventivo già analizzata: pacchetto suggerito, complessità, servizi extra da proporre e priorità del contatto.
 
-- Design "Polvere di stelle": nero, avorio e oro tenue, con una sfera di particelle.
+- Design "Anello d'oro": nero, avorio e oro tenue. Un anello d'oro si disegna all'apertura, una luce gli gira intorno e a ogni risposta parte un'onda leggera.
 - Cinque lingue (italiano, inglese, francese, tedesco, arabo), scelte in automatico.
 - Su smartphone si apre a schermo intero, su computer come pannello in basso a destra.
 - Ricorda i progressi: chi chiude la chat riprende da dove era.
@@ -60,17 +60,12 @@ LOGO_URL: "",   // facoltativo: un'immagine quadrata del logo
 
 ---
 
-## Passo 2 — Provarlo online con GitHub Pages
+## Passo 2 — Anteprima online (GitHub Pages)
 
-GitHub Pages pubblica gratis i file della repository come un sito.
+La repository è pubblica e GitHub Pages è già attivo: ogni modifica salvata su GitHub va online da sola in un minuto o due.
 
-> ⚠️ Con il piano gratuito di GitHub, Pages funziona solo se la repository è **pubblica**. Nel codice non ci sono segreti: la chiave Web3Forms è comunque visibile a chiunque usi il widget.
-
-1. Su GitHub apri la repository → **Settings** → **Pages**.
-2. In "Build and deployment" scegli **Source: Deploy from a branch**, **Branch: main**, cartella **/ (root)** → **Save**.
-3. Dopo uno o due minuti la pagina di prova sarà su
-   **https://superalex131313.github.io/chatbot-preventivi/**
-4. Aprila da computer e da telefono e prova tutto il percorso.
+- Anteprima del chatbot: **https://superalex131313.github.io/chatbot-preventivi/**
+- Le 10 proposte di visual: `design/sfondi.png`. Le 10 proposte di design: `design/proposte.png`.
 
 ---
 
